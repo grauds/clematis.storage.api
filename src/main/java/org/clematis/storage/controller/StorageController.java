@@ -126,7 +126,7 @@ public class StorageController {
             if (!downloadFolderFile.exists()) {
                 downloadFolderFile.mkdirs();
             }
-            file.transferTo(new File(downloadFolder + File.separator + fileName));
+            file.transferTo(new File(downloadFolder + File.separator + fileName).getAbsoluteFile());
             assert fileName != null;
             String downloadUrl = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(DOWNLOAD_PATH)
@@ -151,7 +151,7 @@ public class StorageController {
         for (MultipartFile file : files) {
             String fileName = file.getOriginalFilename();
             try {
-                file.transferTo(new File(downloadFolder + File.separator + fileName));
+                file.transferTo(new File(downloadFolder + File.separator + fileName).getAbsoluteFile());
                 assert fileName != null;
                 String downloadUrl = ServletUriComponentsBuilder.fromCurrentContextPath()
                     .path(DOWNLOAD_PATH)
