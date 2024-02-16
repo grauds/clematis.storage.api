@@ -3,6 +3,8 @@ package org.clematis.storage.service;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.UUID;
 
 import org.clematis.storage.model.StorageEntity;
 import org.clematis.storage.repository.StorageEntityRepository;
@@ -27,7 +29,7 @@ public class StorageServiceImpl implements StorageService {
         try {
 
             if(fileName.contains("..")) {
-                throw  new Exception("Filename contains invalid path sequence " + fileName);
+                throw new Exception("Filename contains invalid path sequence " + fileName);
             }
             if (file.getBytes().length > (1024 * 1024)) {
                 throw new Exception("File size exceeds maximum limit");
@@ -56,5 +58,11 @@ public class StorageServiceImpl implements StorageService {
     @Override
     public List<StorageEntity> getAllFiles() {
         return storageEntityRepository.findAll();
+    }
+
+    @Override
+    public byte[] getFile(UUID id) {
+        Optional<StorageEntity> storageEntity = storageEntityRepository.findById(id.toString());
+        return storageEntity.isPresent() ? storageEntity.get().getData() : new byte[0];
     }
 }
