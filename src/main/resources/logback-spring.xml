@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<configuration scan="true" scanPeriod="30 seconds">
+<configuration>
+    <springProperty name="LOG_PATH" source="logging.path" defaultValue="logs/" />
     <jmxConfigurator/>
 
     <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">

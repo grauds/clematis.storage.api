@@ -31,6 +31,7 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     checkstyle "com.puppycrawl.tools:checkstyle:7.8.2"
 
+    implementation "org.springframework.boot:spring-boot-starter-actuator"
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.glassfish.main.external:jmxremote_optional-repackaged:5.0'
