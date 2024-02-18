@@ -29,10 +29,13 @@ repositories {
 dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     compileOnly 'org.projectlombok:lombok'
-    checkstyle "com.puppycrawl.tools:checkstyle:7.7"
+    checkstyle "com.puppycrawl.tools:checkstyle:7.8.2"
 
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // to use regexp in logback.xml
+    implementation 'org.codehaus.janino:janino:3.1.6'
 
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
   //  developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
