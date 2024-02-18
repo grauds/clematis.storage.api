@@ -22,7 +22,7 @@ clematis:
 
 logging:
   file:
-    path: ./log
+    path: ./logs
 
 JMXMP_HOST: 0.0.0.0
 JMXMP_PORT: 5001

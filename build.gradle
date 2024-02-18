@@ -148,3 +148,14 @@ tasks.register('checkstyleReport') {
 tasks.withType(Checkstyle).configureEach {
     exclude '**/*Test*'
 }
+
+springBoot {
+    buildInfo {
+        properties {
+            artifact = 'clematis-storage-api'
+            version = project.version
+            group = 'org.clematis.storage'
+            name = 'Clematis Storage API'
+        }
+    }
+}

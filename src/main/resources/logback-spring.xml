@@ -1,5 +1,5 @@
 <configuration>
-    <springProperty name="LOG_PATH" source="logging.path" defaultValue="logs/" />
+    <springProperty name="LOG_PATH" source="logging.file.path" defaultValue="logs/" />
     <jmxConfigurator/>
 
     <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
