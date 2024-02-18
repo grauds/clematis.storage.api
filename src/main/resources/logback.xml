@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="30 seconds">
+    <jmxConfigurator/>
+
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <target>System.out</target>
+        <filter class="ch.qos.logback.core.filter.EvaluatorFilter">
+            <evaluator>
+                <matcher>
+                    <Name>first_retry</Name>
+                    <!-- filter out initial retry messages -->
+                    <regex>Retry: count=0</regex>
+                </matcher>
+                <expression>first_retry.matches(formattedMessage)</expression>
+            </evaluator>
+            <OnMismatch>NEUTRAL</OnMismatch>
+            <OnMatch>DENY</OnMatch>
+        </filter>
+        <encoder>
+            <pattern>[%date{"yyyy-MM-dd'T'HH:mm:ss,SSSXXX"}] [%thread] %level %logger{5} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <property name="LOG_HISTORY" value="7" />
+    <property name="LOG_LEVEL" value="INFO" />
+
+    <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+        <file>${LOG_PATH}/api.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <fileNamePattern>${LOG_PATH}/api.%d.log</fileNamePattern>
+            <maxHistory>${LOG_HISTORY}</maxHistory>
+        </rollingPolicy>
+
+        <filter class="ch.qos.logback.core.filter.EvaluatorFilter">
+            <evaluator>
+                <matcher>
+                    <Name>first_retry</Name>
+                    <!-- filter out initial retry messages -->
+                    <regex>Retry: count=0</regex>
+                </matcher>
+
+                <expression>first_retry.matches(formattedMessage)</expression>
+            </evaluator>
+            <OnMismatch>NEUTRAL</OnMismatch>
+            <OnMatch>DENY</OnMatch>
+        </filter>
+        <encoder>
+            <pattern>[%date{"yyyy-MM-dd'T'HH:mm:ss,SSSXXX"}] [%thread] %level %logger{5} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="${LOG_LEVEL}">
+        <appender-ref ref="file"/>
+        <appender-ref ref="stdout" />
+    </root>
+
+    <logger name="org.clematis" level="${LOG_LEVEL}"/>
+    <logger name="jworkspace" level="${LOG_LEVEL}"/>
+    <logger name="org.apache" additivity="false"/>
+    <logger name="httpclient.wire" additivity="false"/>
+    <logger name="org.springframework" level="${LOG_LEVEL}"/>
+    <logger name="org.springframework.retry" level="${LOG_LEVEL}"/>
+</configuration>
