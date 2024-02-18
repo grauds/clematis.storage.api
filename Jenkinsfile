@@ -20,7 +20,7 @@ pipeline {
 
         stage('Get code') {
             steps {
-                git branch: 'main', url: 'https://github.com/grauds/clematis.storage.api.git'
+                git branch: 'master', url: 'https://github.com/grauds/clematis.storage.api.git'
                 sh 'chmod +x gradlew'
             }
         }
