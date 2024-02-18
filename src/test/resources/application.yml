@@ -10,6 +10,10 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
 
+  jmx:
+    enabled: true
+    url: service:jmx:jmxmp://${JMXMP_HOST}:${JMXMP_PORT}/
+
 clematis:
   storage:
     download:
@@ -19,3 +23,6 @@ clematis:
 logging:
   file:
     path: ./log
+
+JMXMP_HOST: 0.0.0.0
+JMXMP_PORT: 5001

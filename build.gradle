@@ -33,9 +33,10 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.glassfish.main.external:jmxremote_optional-repackaged:5.0'
 
     // to use regexp in logback.xml
-    implementation 'org.codehaus.janino:janino:3.1.6'
+    implementation 'org.codehaus.janino:janino:3.1.10'
 
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
   //  developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
@@ -58,7 +59,7 @@ dependencies {
 
     testCompileOnly "org.projectlombok:lombok:1.18.24"
     testCompileOnly (
-            "com.github.spotbugs:spotbugs:4.7.1",
+            "com.github.spotbugs:spotbugs:4.7.3",
             "com.google.code.findbugs:annotations:3.0.1u2"
     )
 }
@@ -66,6 +67,10 @@ dependencies {
 // ------------ JaCoCo configuration  ---------
 ext {
     setProperty('snippetsDir', file("build/generated-snippets"))
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
 }
 
 test {
@@ -141,8 +146,4 @@ tasks.register('checkstyleReport') {
 
 tasks.withType(Checkstyle).configureEach {
     exclude '**/*Test*'
-}
-
-tasks.named('test') {
-    useJUnitPlatform()
 }
