@@ -1,0 +1,16 @@
+###
+POST http://localhost:8080/api/db/upload
+Content-Type: application/x-www-form-urlencoded
+
+###
+POST http://localhost:8080/api/db/upload/batch
+Content-Type: application/x-www-form-urlencoded
+
+###
+GET http://localhost:8080/api/db/get
+
+###
+GET http://localhost:8080/api/db/download/{id}
+
+###
+DELETE http://localhost:8080/api/db/{id}

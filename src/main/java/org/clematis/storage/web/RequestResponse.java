@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Specification of request response data. It carries direct download string to get uploaded file.
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

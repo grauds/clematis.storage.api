@@ -24,20 +24,21 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.extern.java.Log;
+
 /**
- * Spring Web MVC controller to expose endpoints to upload file to database storage
+ * Spring Web MVC controller to expose endpoints to upload file to filesystem storage
  */
 @RestController
-@RequestMapping("/api/db")
+@RequestMapping("/api/files")
 @SuppressFBWarnings("EI_EXPOSE_REP")
 @Log
-public class StorageController {
+public class FileStorageController {
 
-    public static final String DOWNLOAD_PATH = "/api/db/download/";
+    public static final String DOWNLOAD_PATH = "/api/files/download/";
 
     private final StorageService storageService;
 
-    public StorageController(@Qualifier("dbStorageServiceImpl") StorageService storageService) {
+    public FileStorageController(@Qualifier("fileStorageServiceImpl") StorageService storageService) {
         this.storageService = storageService;
     }
 

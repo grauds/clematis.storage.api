@@ -1,11 +1,13 @@
 package org.clematis.storage.service;
 
 import java.util.List;
-import java.util.UUID;
 
 import org.clematis.storage.model.StorageEntity;
 import org.springframework.web.multipart.MultipartFile;
 
+/**
+ * Specification of storage service to be extended with any other storage system interface.
+ */
 public interface StorageService {
 
     StorageEntity saveAttachment(MultipartFile file) throws Exception;
@@ -14,5 +16,7 @@ public interface StorageService {
 
     List<StorageEntity> getAllFiles();
 
-    byte[] getFile(UUID id);
+    byte[] getFile(String id);
+
+    void deleteFile(String id);
 }

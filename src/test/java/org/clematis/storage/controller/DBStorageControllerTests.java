@@ -1,6 +1,8 @@
 package org.clematis.storage.controller;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -20,7 +22,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
-public class StorageControllerTests extends ApplicationTests {
+@SuppressFBWarnings("NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE")
+public class DBStorageControllerTests extends ApplicationTests {
 
     public static final String HELLO_WORLD = "Hello, world!";
 
@@ -29,7 +32,7 @@ public class StorageControllerTests extends ApplicationTests {
 
     public static Resource mockMultipartFile() throws IOException {
         Path testFile = Files.createTempFile("test", ".txt");
-        Files.write(testFile, HELLO_WORLD.getBytes());
+        Files.writeString(testFile, HELLO_WORLD);
         return new FileSystemResource(testFile.toFile());
     }
 
@@ -45,7 +48,7 @@ public class StorageControllerTests extends ApplicationTests {
         HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
 
         ResponseEntity<RequestResponse> responseEntity = testRestTemplate
-            .postForEntity("/api/files/single/base", requestEntity, RequestResponse.class);
+            .postForEntity("/api/db/upload", requestEntity, RequestResponse.class);
 
         Assertions.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         Assertions.assertNotNull(responseEntity.getBody());
@@ -53,7 +56,7 @@ public class StorageControllerTests extends ApplicationTests {
         ResponseEntity<byte[]> file
             = testRestTemplate.getForEntity(responseEntity.getBody().getDownloadUrl(), byte[].class);
         Assertions.assertNotNull(file.getBody());
-        Assertions.assertEquals(HELLO_WORLD, new String(file.getBody()));
+        Assertions.assertEquals(HELLO_WORLD, new String(file.getBody(), StandardCharsets.UTF_8));
     }
 
     @Test
@@ -68,7 +71,7 @@ public class StorageControllerTests extends ApplicationTests {
         HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
 
         ResponseEntity<RequestResponse> responseEntity = testRestTemplate
-            .postForEntity("/api/files/single/file", requestEntity, RequestResponse.class);
+            .postForEntity("/api/db/upload", requestEntity, RequestResponse.class);
 
         Assertions.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         Assertions.assertNotNull(responseEntity.getBody());
@@ -76,7 +79,7 @@ public class StorageControllerTests extends ApplicationTests {
         ResponseEntity<byte[]> file
             = testRestTemplate.getForEntity(responseEntity.getBody().getDownloadUrl(), byte[].class);
         Assertions.assertNotNull(file.getBody());
-        Assertions.assertEquals(HELLO_WORLD, new String(file.getBody()));
+        Assertions.assertEquals(HELLO_WORLD, new String(file.getBody(), StandardCharsets.UTF_8));
     }
 
 }
