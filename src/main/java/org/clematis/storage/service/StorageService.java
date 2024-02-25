@@ -16,7 +16,7 @@ public interface StorageService {
 
     List<StorageEntity> getAllFiles();
 
-    byte[] getFile(String id);
+    StorageEntity getStorageEntity(String id);
 
     void deleteFile(String id);
 }

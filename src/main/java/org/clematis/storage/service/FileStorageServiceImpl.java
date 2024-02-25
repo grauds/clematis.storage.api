@@ -10,6 +10,7 @@ import java.util.logging.Level;
 
 import org.clematis.storage.model.StorageEntity;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -55,12 +56,17 @@ public class FileStorageServiceImpl implements StorageService {
     }
 
     @Override
-    public byte[] getFile(String id) {
+    public StorageEntity getStorageEntity(String id) {
         try {
-            return Files.readAllBytes(Path.of(downloadFolder, id));
+            Path path = Path.of(downloadFolder, id);
+            String contentType = Files.probeContentType(path);
+            if (contentType == null) {
+                contentType = MediaType.APPLICATION_OCTET_STREAM_VALUE;
+            }
+            return new StorageEntity(id, contentType, Files.readAllBytes(Path.of(downloadFolder, id)));
         } catch (IOException e) {
             log.log(Level.SEVERE, e.getMessage());
-            return new byte[0];
+            return new StorageEntity(new byte[0]);
         }
     }
 

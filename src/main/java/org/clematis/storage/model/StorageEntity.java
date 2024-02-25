@@ -33,15 +33,18 @@ public class StorageEntity {
 
     private String fileName;
 
-    private String fileType;
+    private String contentType;
 
     @Lob
     private byte[] data;
 
-    public StorageEntity(String fileName, String fileType, byte[] data) {
-        this.fileName = fileName;
-        this.fileType = fileType;
+    public StorageEntity(byte[] data) {
         this.data = data;
     }
 
+    public StorageEntity(String fileName, String contentType, byte[] data) {
+        this.fileName = fileName;
+        this.contentType = contentType;
+        this.data = data;
+    }
 }

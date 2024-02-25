@@ -9,6 +9,7 @@ import org.clematis.storage.model.StorageEntity;
 import org.clematis.storage.service.StorageService;
 import org.clematis.storage.web.RequestResponse;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -67,7 +68,7 @@ public abstract class AbstractStorageController {
 
         List<RequestResponse> responses = storageEntities.stream()
             .map(storageEntity -> createResponse(storageEntity,
-                    storageEntity.getFileType(),
+                    storageEntity.getContentType(),
                     storageEntity.getData().length
                 )
             ).collect(Collectors.toList());
@@ -77,8 +78,12 @@ public abstract class AbstractStorageController {
 
     @GetMapping(value = "/download/{id}")
     @ResponseBody
-    public byte[] getFile(@PathVariable("id") String id) {
-        return getStorageService().getFile(id);
+    public ResponseEntity<byte[]> getFile(@PathVariable("id") String id) {
+        StorageEntity storageEntity = getStorageService().getStorageEntity(id);
+        return ResponseEntity
+            .ok()
+            .contentType(MediaType.valueOf(storageEntity.getContentType()))
+            .body(storageEntity.getData());
     }
 
     @DeleteMapping(value = "/{id}")

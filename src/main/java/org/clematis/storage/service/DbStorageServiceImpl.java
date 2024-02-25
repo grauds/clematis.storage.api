@@ -70,9 +70,9 @@ public class DbStorageServiceImpl implements StorageService {
     }
 
     @Override
-    public byte[] getFile(String id) {
+    public StorageEntity getStorageEntity(String id) {
         Optional<StorageEntity> storageEntity = storageEntityRepository.findById(id);
-        return storageEntity.isPresent() ? storageEntity.get().getData() : new byte[0];
+        return storageEntity.orElseGet(() -> new StorageEntity(new byte[0]));
     }
 
     @Override

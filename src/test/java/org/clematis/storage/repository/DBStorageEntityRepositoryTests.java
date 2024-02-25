@@ -37,7 +37,7 @@ public class DBStorageEntityRepositoryTests extends ApplicationTests {
         StorageEntity storageEntity = storageService.saveAttachment(mockFile);
         assertNotNull(storageEntity.getId());
         assertEquals("test.txt", storageEntity.getFileName());
-        assertEquals("text/plain", storageEntity.getFileType());
+        assertEquals("text/plain", storageEntity.getContentType());
     }
 
     @Test
