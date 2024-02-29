@@ -36,10 +36,11 @@ public abstract class AbstractStorageController {
         return new RequestResponse(attachment.getFileName(), downloadUrl, file, size);
     }
 
-    @PostMapping("/upload")
-    public ResponseEntity<RequestResponse> upload(@RequestParam("file") MultipartFile file) {
+    @PostMapping("/upload{path}")
+    public ResponseEntity<RequestResponse> upload(@RequestParam("file") MultipartFile file,
+                                                  @PathVariable(name = "path", required = false) String path) {
         try {
-            RequestResponse response = saveAttachment(file);
+            RequestResponse response = saveAttachment(file, path);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             log.log(Level.SEVERE, e.getMessage());
@@ -47,12 +48,13 @@ public abstract class AbstractStorageController {
         }
     }
 
-    @PostMapping("/upload/batch")
-    public ResponseEntity<List<RequestResponse>> upload(@RequestParam("files") MultipartFile[] files) {
+    @PostMapping("/upload/batch{path}")
+    public ResponseEntity<List<RequestResponse>> upload(@RequestParam("files") MultipartFile[] files,
+                                                        @PathVariable(name = "path", required = false) String path) {
         try {
             List<RequestResponse> responseList = new ArrayList<>();
             for (MultipartFile file : files) {
-                RequestResponse response = saveAttachment(file);
+                RequestResponse response = saveAttachment(file, path);
                 responseList.add(response);
             }
             return ResponseEntity.ok(responseList);
@@ -91,8 +93,8 @@ public abstract class AbstractStorageController {
         getStorageService().deleteFile(id);
     }
 
-    protected RequestResponse saveAttachment(MultipartFile file) throws Exception {
-        StorageEntity attachment = getStorageService().saveAttachment(file);
+    protected RequestResponse saveAttachment(MultipartFile file, String path) throws Exception {
+        StorageEntity attachment = getStorageService().saveAttachment(file, path);
         return createResponse(attachment, file.getContentType(), file.getSize());
     }
 

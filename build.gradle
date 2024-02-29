@@ -28,41 +28,39 @@ repositories {
 
 dependencies {
     annotationProcessor 'org.projectlombok:lombok'
-    compileOnly 'org.projectlombok:lombok'
+
+    compileOnly (
+            'org.projectlombok:lombok',
+            "com.github.spotbugs:spotbugs:4.7.3",
+            "com.google.code.findbugs:annotations:3.0.1u2"
+    )
     checkstyle "com.puppycrawl.tools:checkstyle:7.8.2"
+
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
     implementation "org.springframework.boot:spring-boot-starter-actuator"
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.glassfish.main.external:jmxremote_optional-repackaged:5.0'
-
     // to use regexp in logback.xml
     implementation 'org.codehaus.janino:janino:3.1.10'
-
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
-  //  developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
-    compileOnly (
-        "com.github.spotbugs:spotbugs:4.7.3",
-        "com.google.code.findbugs:annotations:3.0.1u2"
-    )
 
     runtimeOnly 'com.mysql:mysql-connector-j'
     runtimeOnly 'com.h2database:h2'
 
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.boot:spring-boot-testcontainers'
+    testCompileOnly (
+            "com.github.spotbugs:spotbugs:4.7.3",
+            "com.google.code.findbugs:annotations:3.0.1u2",
+            "org.projectlombok:lombok"
+    )
+
     testImplementation ('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
+    testImplementation 'org.springframework.boot:spring-boot-testcontainers'
     testImplementation 'org.apache.httpcomponents.client5:httpclient5'
     testImplementation 'org.testcontainers:junit-jupiter'
     testImplementation 'org.testcontainers:mysql'
-
-    testCompileOnly "org.projectlombok:lombok:1.18.24"
-    testCompileOnly (
-            "com.github.spotbugs:spotbugs:4.7.3",
-            "com.google.code.findbugs:annotations:3.0.1u2"
-    )
 }
 
 // ------------ JaCoCo configuration  ---------

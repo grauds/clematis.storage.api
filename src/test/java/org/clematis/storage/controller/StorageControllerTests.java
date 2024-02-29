@@ -1,6 +1,5 @@
 package org.clematis.storage.controller;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -22,8 +21,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 @SuppressFBWarnings("NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE")
-public class DBStorageControllerTests extends ApplicationTests {
+public class StorageControllerTests extends ApplicationTests {
 
     public static final String HELLO_WORLD = "Hello, world!";
 
@@ -71,7 +72,7 @@ public class DBStorageControllerTests extends ApplicationTests {
         HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
 
         ResponseEntity<RequestResponse> responseEntity = testRestTemplate
-            .postForEntity("/api/db/upload", requestEntity, RequestResponse.class);
+            .postForEntity("/api/files/upload", requestEntity, RequestResponse.class);
 
         Assertions.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         Assertions.assertNotNull(responseEntity.getBody());

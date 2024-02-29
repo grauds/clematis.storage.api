@@ -34,7 +34,7 @@ public class DBStorageEntityRepositoryTests extends ApplicationTests {
         MockMultipartFile mockFile = new MockMultipartFile(
             "file", "test.txt", "text/plain",
             "Hello, world!".getBytes(StandardCharsets.UTF_8));
-        StorageEntity storageEntity = storageService.saveAttachment(mockFile);
+        StorageEntity storageEntity = storageService.saveAttachment(mockFile, "");
         assertNotNull(storageEntity.getId());
         assertEquals("test.txt", storageEntity.getFileName());
         assertEquals("text/plain", storageEntity.getContentType());
@@ -48,8 +48,8 @@ public class DBStorageEntityRepositoryTests extends ApplicationTests {
         MockMultipartFile mockFile2 = new MockMultipartFile(
             "file", "test2.txt", "text/plain",
             "Goodbye, world!".getBytes(StandardCharsets.UTF_8));
-        storageService.saveFiles(new MockMultipartFile[]{mockFile1, mockFile2});
-        List<StorageEntity> storageEntities = storageService.getAllFiles();
+        List<StorageEntity> storageEntities = storageService.saveAttachments(
+            new MockMultipartFile[]{mockFile1, mockFile2}, "");
         System.out.println("Saved files:");
         for (StorageEntity product : storageEntities) {
             System.out.println(product.getFileName());
@@ -64,7 +64,7 @@ public class DBStorageEntityRepositoryTests extends ApplicationTests {
         MockMultipartFile mockFile = new MockMultipartFile(
             "file", "../test.txt", "text/plain",
             "Hello, world!".getBytes(StandardCharsets.UTF_8));
-        assertThrows(Exception.class, () -> storageService.saveAttachment(mockFile));
+        assertThrows(Exception.class, () -> storageService.saveAttachment(mockFile, ""));
     }
 
     @Test
@@ -72,7 +72,7 @@ public class DBStorageEntityRepositoryTests extends ApplicationTests {
         byte[] bytes = new byte[1024 * 1024 * 10];
         MockMultipartFile mockFile = new MockMultipartFile(
             "file", "test.txt", "text/plain", bytes);
-        assertThrows(Exception.class, () -> storageService.saveAttachment(mockFile));
+        assertThrows(Exception.class, () -> storageService.saveAttachment(mockFile, ""));
     }
 
 }

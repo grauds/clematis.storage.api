@@ -10,9 +10,9 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public interface StorageService {
 
-    StorageEntity saveAttachment(MultipartFile file) throws Exception;
+    StorageEntity saveAttachment(MultipartFile file, String path) throws Exception;
 
-    void saveFiles(MultipartFile[] files) throws Exception;
+    List<StorageEntity> saveAttachments(MultipartFile[] files, String path) throws Exception;
 
     List<StorageEntity> getAllFiles();
 
