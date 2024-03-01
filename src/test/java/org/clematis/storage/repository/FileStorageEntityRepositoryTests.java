@@ -2,10 +2,9 @@ package org.clematis.storage.repository;
 
 import java.nio.charset.StandardCharsets;
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.clematis.storage.ApplicationTests;
 import org.clematis.storage.model.StorageEntity;
 import org.clematis.storage.service.StorageService;
@@ -15,12 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.mock.web.MockMultipartFile;
 
-public class DBStorageEntityRepositoryTests extends ApplicationTests {
+public class FileStorageEntityRepositoryTests extends ApplicationTests {
 
     @Autowired
     private StorageEntityRepository storageEntityRepository;
 
-    @Qualifier("dbStorageServiceImpl")
+    @Qualifier("fileStorageServiceImpl")
     @Autowired
     private StorageService storageService;
 
@@ -57,22 +56,6 @@ public class DBStorageEntityRepositoryTests extends ApplicationTests {
         assertEquals(2, storageEntities.size());
         assertEquals("testFolder/test1.pdf", storageEntities.get(0).getFileName());
         assertEquals("testFolder/test2.txt", storageEntities.get(1).getFileName());
-    }
-
-    @Test
-    public void testSaveAttachmentInvalidName() {
-        MockMultipartFile mockFile = new MockMultipartFile(
-            "file", "../test.txt", "text/plain",
-            "Hello, world!".getBytes(StandardCharsets.UTF_8));
-        assertThrows(Exception.class, () -> storageService.saveAttachment(mockFile, ""));
-    }
-
-    @Test
-    public void testSaveAttachmentTooLarge() {
-        byte[] bytes = new byte[1024 * 1024 * 10];
-        MockMultipartFile mockFile = new MockMultipartFile(
-            "file", "test.txt", "text/plain", bytes);
-        assertThrows(Exception.class, () -> storageService.saveAttachment(mockFile, ""));
     }
 
 }

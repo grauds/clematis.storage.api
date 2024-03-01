@@ -83,4 +83,29 @@ public class StorageControllerTests extends ApplicationTests {
         Assertions.assertEquals(HELLO_WORLD, new String(file.getBody(), StandardCharsets.UTF_8));
     }
 
+
+    @Test
+    public void testFileDownloadInFilesystemFolder() throws IOException {
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+
+        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+        body.add("file", mockMultipartFile());
+
+        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
+
+        ResponseEntity<RequestResponse> responseEntity = testRestTemplate
+            .postForEntity("/api/files/upload?path=test", requestEntity, RequestResponse.class);
+
+        Assertions.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        Assertions.assertNotNull(responseEntity.getBody());
+
+        ResponseEntity<byte[]> file
+            = testRestTemplate.getForEntity(responseEntity.getBody().getDownloadUrl(), byte[].class);
+        Assertions.assertNotNull(file.getBody());
+        Assertions.assertEquals(HELLO_WORLD, new String(file.getBody(), StandardCharsets.UTF_8));
+    }
+
+
 }

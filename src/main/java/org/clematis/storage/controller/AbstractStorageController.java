@@ -36,9 +36,9 @@ public abstract class AbstractStorageController {
         return new RequestResponse(attachment.getFileName(), downloadUrl, file, size);
     }
 
-    @PostMapping("/upload{path}")
+    @PostMapping("/upload")
     public ResponseEntity<RequestResponse> upload(@RequestParam("file") MultipartFile file,
-                                                  @PathVariable(name = "path", required = false) String path) {
+                                                  @RequestParam(name = "path", required = false) String path) {
         try {
             RequestResponse response = saveAttachment(file, path);
             return ResponseEntity.ok(response);
@@ -48,9 +48,9 @@ public abstract class AbstractStorageController {
         }
     }
 
-    @PostMapping("/upload/batch{path}")
+    @PostMapping("/upload/batch")
     public ResponseEntity<List<RequestResponse>> upload(@RequestParam("files") MultipartFile[] files,
-                                                        @PathVariable(name = "path", required = false) String path) {
+                                                        @RequestParam(name = "path", required = false) String path) {
         try {
             List<RequestResponse> responseList = new ArrayList<>();
             for (MultipartFile file : files) {
