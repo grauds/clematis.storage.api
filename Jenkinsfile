@@ -63,7 +63,7 @@ pipeline {
 
         stage("Build and start docker compose services") {
             environment {
-                SPRING_DATASOURCE_MYSQL_PASSWORD = credentials('SPRING_DATASOURCE_MYSQL_PASSWORD')
+                SPRING_DATASOURCE_PASSWORD = credentials('SPRING_DATASOURCE_MYSQL_PASSWORD')
                 STORAGE_FILES_PATH = credentials('STORAGE_FILES_PATH')
             }
             steps {
@@ -71,7 +71,7 @@ pipeline {
                  cd jenkins
                  docker compose stop
                  docker stop clematis-storage-api || true && docker rm clematis-storage-api || true
-                 docker compose build --build-arg SPRING_DATASOURCE_MYSQL_PASSWORD='$SPRING_DATASOURCE_MYSQL_PASSWORD' --build-arg STORAGE_FILES_PATH='STORAGE_FILES_PATH'
+                 docker compose build --build-arg SPRING_DATASOURCE_PASSWORD='SPRING_DATASOURCE_PASSWORD' --build-arg STORAGE_FILES_PATH='STORAGE_FILES_PATH'
                  docker compose up -d 
               '''
             }

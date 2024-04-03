@@ -5,7 +5,7 @@
       networks:
         - clematis_str
       ports:
-        - "18088:8080"
+        - ${SPRING_LOCAL_PORT}:${SPRING_DOCKER_PORT}
         - "15091:5000"
         - "15092:5001"
       env_file:
@@ -13,6 +13,24 @@
       volumes:
         - /home/clematis/storage/logs:/var/log/clematis
         - /home/clematis/storage/files:/home/clematis/storage/files
+      restart: unless-stopped
+
+    clematis-storage-db:
+      networks:
+        - clematis_auth
+      container_name: clematis-storage-mysql-db
+      image: library/mysql:8.0
+      volumes:
+        - /home/clematis/storage/storage:/var/lib/mysql
+      env_file:
+        - .env
+      ports:
+        - ${MYSQL_LOCAL_PORT}:${MYSQL_DOCKER_PORT}
+      environment:
+        MYSQL_USER: ${MYSQL_USER}
+        MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+        MYSQL_DATABASE: ${MYSQL_DATABASE}
+        MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
       restart: unless-stopped
 
   networks:
