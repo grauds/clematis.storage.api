@@ -63,7 +63,7 @@ pipeline {
 
         stage("Build and start docker compose services") {
             environment {
-                SPRING_DATASOURCE_PASSWORD = credentials('SPRING_DATASOURCE_MYSQL_PASSWORD')
+                SPRING_DATASOURCE_PASSWORD = credentials('SPRING_DATASOURCE_PASSWORD')
                 STORAGE_FILES_PATH = credentials('STORAGE_FILES_PATH')
             }
             steps {
