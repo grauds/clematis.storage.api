@@ -17,9 +17,9 @@
 
     clematis-storage-db:
       networks:
-        - clematis_auth
+        - clematis_str
       container_name: clematis-storage-mysql-db
-      image: library/mysql:8.0
+      image: library/mysql:latest
       volumes:
         - /home/clematis/storage/storage:/var/lib/mysql
       env_file:
