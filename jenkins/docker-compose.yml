@@ -9,7 +9,7 @@
         - "15091:5000"
         - "15092:5001"
       env_file:
-        - storage_api_qa.env
+        - .env
       volumes:
         - /home/clematis/storage/logs:/var/log/clematis
         - /home/clematis/storage/files:/home/clematis/storage/files
@@ -23,7 +23,7 @@
       volumes:
         - /home/clematis/storage/storage:/var/lib/mysql
       env_file:
-        - storage_api_qa.env
+        - .env
       ports:
         - ${MYSQL_LOCAL_PORT}:${MYSQL_DOCKER_PORT}
       environment:
