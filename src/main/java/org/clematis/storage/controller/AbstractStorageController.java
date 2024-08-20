@@ -37,20 +37,22 @@ public abstract class AbstractStorageController {
     }
 
     @PostMapping("/upload")
-    public ResponseEntity<RequestResponse> upload(@RequestParam("file") MultipartFile file,
-                                                  @RequestParam(name = "path", required = false) String path) {
+    public ResponseEntity<?> upload(@RequestParam("file") MultipartFile file,
+                                    @RequestParam(name = "path", required = false) String path) {
         try {
             RequestResponse response = saveAttachment(file, path);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             log.log(Level.SEVERE, e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(e.getMessage());
         }
     }
 
     @PostMapping("/upload/batch")
-    public ResponseEntity<List<RequestResponse>> upload(@RequestParam("files") MultipartFile[] files,
-                                                        @RequestParam(name = "path", required = false) String path) {
+    public ResponseEntity<?> upload(@RequestParam("files") MultipartFile[] files,
+                                          @RequestParam(name = "path", required = false) String path) {
         try {
             List<RequestResponse> responseList = new ArrayList<>();
             for (MultipartFile file : files) {
@@ -60,7 +62,9 @@ public abstract class AbstractStorageController {
             return ResponseEntity.ok(responseList);
         } catch (Exception e) {
             AbstractStorageController.log.log(Level.SEVERE, e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(e.getMessage());
         }
     }
 
