@@ -108,16 +108,21 @@ public class FileStorageServiceImpl implements StorageService {
      * @param id of the storage entity to load
      * @return storage entity with file bytes, content type and id from the initial arguments for the method
      */
+    @SuppressWarnings("checkstyle:ReturnCount")
     @Override
-    public StorageEntity getStorageEntity(String id) {
+    public Optional<StorageEntity> getStorageEntity(String id) {
         try {
             Optional<StorageEntity> storageEntity = storageEntityRepository.findById(id);
-            Path path = Path.of(downloadFolder, storageEntity.orElseThrow().getFileName());
-            MediaType contentType = ensureMediaType(storageEntity, path);
-            return new StorageEntity(id, contentType.toString(), Files.readAllBytes(path));
+            if (storageEntity.isPresent()) {
+                Path path = Path.of(downloadFolder, storageEntity.orElseThrow().getFileName());
+                MediaType contentType = ensureMediaType(storageEntity, path);
+                return Optional.of(new StorageEntity(id, contentType.toString(), Files.readAllBytes(path)));
+            } else {
+                return Optional.empty();
+            }
         } catch (IOException e) {
             log.log(Level.SEVERE, e.getMessage());
-            return new StorageEntity(new byte[0]);
+            return Optional.empty();
         }
     }
 

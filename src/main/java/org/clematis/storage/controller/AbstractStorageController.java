@@ -2,11 +2,13 @@ package org.clematis.storage.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.stream.Collectors;
 
 import org.clematis.storage.model.StorageEntity;
 import org.clematis.storage.service.StorageService;
+import org.clematis.storage.web.ErrorResponse;
 import org.clematis.storage.web.RequestResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -46,7 +48,7 @@ public abstract class AbstractStorageController {
             log.log(Level.SEVERE, e.getMessage());
             return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(e.getMessage());
+                .body(new ErrorResponse(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR));
         }
     }
 
@@ -61,10 +63,10 @@ public abstract class AbstractStorageController {
             }
             return ResponseEntity.ok(responseList);
         } catch (Exception e) {
-            AbstractStorageController.log.log(Level.SEVERE, e.getMessage());
+            log.log(Level.SEVERE, e.getMessage());
             return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(e.getMessage());
+                .body(new ErrorResponse(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR));
         }
     }
 
@@ -82,14 +84,28 @@ public abstract class AbstractStorageController {
         return ResponseEntity.ok().body(responses);
     }
 
+    @SuppressWarnings("checkstyle:ReturnCount")
     @GetMapping(value = "/download/{id}")
     @ResponseBody
-    public ResponseEntity<byte[]> getFile(@PathVariable("id") String id) {
-        StorageEntity storageEntity = getStorageService().getStorageEntity(id);
-        return ResponseEntity
-            .ok()
-            .contentType(MediaType.valueOf(storageEntity.getContentType()))
-            .body(storageEntity.getData());
+    public ResponseEntity<?> getFile(@PathVariable("id") String id) {
+        try {
+            Optional<StorageEntity> storageEntity = getStorageService().getStorageEntity(id);
+            if (storageEntity.isPresent()) {
+                return ResponseEntity
+                    .ok()
+                    .contentType(MediaType.valueOf(storageEntity.get().getContentType()))
+                    .body(storageEntity.get().getData());
+            } else {
+                return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body(new ErrorResponse("File not found, id=" + id, HttpStatus.NOT_FOUND));
+            }
+        } catch (Exception e) {
+            log.log(Level.SEVERE, e.getMessage());
+            return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new ErrorResponse(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR));
+        }
     }
 
     @DeleteMapping(value = "/{id}")

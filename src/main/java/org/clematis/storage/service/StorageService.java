@@ -1,6 +1,7 @@
 package org.clematis.storage.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.clematis.storage.model.StorageEntity;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,7 +17,7 @@ public interface StorageService {
 
     List<StorageEntity> getAllFiles();
 
-    StorageEntity getStorageEntity(String id);
+    Optional<StorageEntity> getStorageEntity(String id);
 
     void deleteFile(String id);
 }
