@@ -1,0 +1,39 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'warning'
+        type: choice
+        options:
+        - info
+        - warning
+        - debug    
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up JDK 17 for x64
+      uses: actions/setup-java@v1
+      with:
+        java-version: '17'
+        architecture: x64
+
+    - name: Build with Gradle
+      run: chmod +x ./gradlew && chmod +x gradle/wrapper/gradle-wrapper.jar && ./gradlew build
+
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag clematis-storage-api:$(date +%s)

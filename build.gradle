@@ -51,13 +51,12 @@ dependencies {
     implementation 'org.codehaus.janino:janino:3.1.12'
 
     runtimeOnly 'com.mysql:mysql-connector-j'
+    runtimeOnly 'com.h2database:h2'
 
     testCompileOnly (
             "com.github.spotbugs:spotbugs:4.8.4",
             "com.google.code.findbugs:annotations:3.0.1u2",
-            "org.projectlombok:lombok",
-            "org.testcontainers:testcontainers:1.20.0",
-            "org.testcontainers:junit-jupiter:1.20.0"
+            "org.projectlombok:lombok"
     )
 
     testImplementation ('org.springframework.boot:spring-boot-starter-test') {
@@ -66,9 +65,8 @@ dependencies {
 
     testImplementation 'org.springframework.boot:spring-boot-testcontainers'
     testImplementation 'org.apache.httpcomponents.client5:httpclient5'
+    testImplementation 'org.testcontainers:junit-jupiter'
     testImplementation 'org.testcontainers:mysql'
-
-    testRuntimeOnly 'com.h2database:h2'
 }
 
 // ------------ JaCoCo configuration  ---------
