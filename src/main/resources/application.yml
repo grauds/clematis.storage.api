@@ -15,14 +15,14 @@ management:
 
 spring:
 
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE}
+
   servlet:
     multipart:
       file-size-threshold: 2KB
       max-file-size: 200MB
       max-request-size: 215MB
-
-  profiles:
-    active: "dev"
 
   sql:
     init:
