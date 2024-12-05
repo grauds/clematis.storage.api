@@ -1,4 +1,11 @@
+clematis:
+  storage:
+    download:
+      folder: ./temp
+    max_file_size: 1000000
+
 spring:
+
   datasource:
     url: jdbc:h2:mem:testdb
     driver-class-name: org.h2.Driver
@@ -13,12 +20,6 @@ spring:
   jmx:
     enabled: true
     url: service:jmx:jmxmp://${JMXMP_HOST}:${JMXMP_PORT}/
-
-clematis:
-  storage:
-    download:
-      folder: ./temp
-    max_file_size: 1000000
 
 logging:
   file:
