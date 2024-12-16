@@ -1,39 +1,35 @@
 package org.clematis.storage.config;
 
-import java.util.List;
-
-import org.springframework.context.annotation.Bean;
+import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
+import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
 import org.springframework.http.HttpMethod;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+
 /**
  * @author Ruslan Lagay
  */
-//@Configuration works only with Spring Security?
-public class CorsConfig {
+@Component
+public class CorsConfig implements RepositoryRestConfigurer {
 
     public static final String ALL_REGEXP = "/**";
     public static final String ORIGINS = "*";
 
-    @Bean(name = "corsConfigurationSource")
-    public CorsConfigurationSource corsConfigurationSource() {
+    @SuppressWarnings("checkstyle:MagicNumber")
+    @Override
+    public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config, CorsRegistry cors) {
 
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of(ORIGINS));
-        configuration.setAllowedMethods(
-            List.of(HttpMethod.GET.name(),
+        cors.addMapping(ALL_REGEXP)
+            .allowedOrigins(ORIGINS)
+            .allowedMethods(HttpMethod.GET.name(),
                 HttpMethod.POST.name(),
                 HttpMethod.PUT.name(),
                 HttpMethod.PATCH.name(),
                 HttpMethod.DELETE.name(),
                 HttpMethod.OPTIONS.name(),
-                HttpMethod.HEAD.name()
-            )
-        );
-
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration(ALL_REGEXP, configuration);
-        return source;
+                HttpMethod.HEAD.name())
+            .allowCredentials(false)
+            .maxAge(3600);
     }
 }
+
