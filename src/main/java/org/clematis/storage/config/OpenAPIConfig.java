@@ -42,20 +42,6 @@ public class OpenAPIConfig {
     }
 
     @Bean
-    public GroupedOpenApi actuatorApi(WebEndpointProperties endpointProperties) {
-        return GroupedOpenApi.builder()
-            .group("Actuator")
-            .pathsToMatch(endpointProperties.getBasePath() + ALL_PATTERN)
-            .addOpenApiCustomizer(openApi -> openApi.info(
-                    new Info()
-                        .title("Storage Actuator API")
-                        .version(buildProperties.getVersion())
-                )
-            )
-            .build();
-    }
-
-    @Bean
     public GroupedOpenApi filesApi() {
         return GroupedOpenApi.builder()
                 .group("Files")
@@ -76,6 +62,20 @@ public class OpenAPIConfig {
         SwaggerUiConfigProperties config = new SwaggerUiConfigProperties();
         config.setShowCommonExtensions(true);
         return config;
+    }
+
+    @Bean
+    public GroupedOpenApi actuatorApi(WebEndpointProperties endpointProperties) {
+        return GroupedOpenApi.builder()
+            .group("Actuator")
+            .pathsToMatch(endpointProperties.getBasePath() + ALL_PATTERN)
+            .addOpenApiCustomizer(openApi -> openApi.info(
+                    new Info()
+                        .title("Storage Actuator API")
+                        .version(buildProperties.getVersion())
+                )
+            )
+            .build();
     }
 
 }
