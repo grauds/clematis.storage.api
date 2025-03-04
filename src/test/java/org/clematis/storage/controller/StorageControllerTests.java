@@ -14,6 +14,7 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import static org.springframework.restdocs.restassured.RestAssuredRestDocumentation.document;
 
 @SuppressFBWarnings("NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE")
 public class StorageControllerTests extends ApplicationTests {
@@ -30,8 +31,9 @@ public class StorageControllerTests extends ApplicationTests {
     public void testFileDownloadDatabase() throws IOException {
 
         RequestResponse response =
-            given().
+            given(this.spec).
                 multiPart(mockMultipartFile().getFile()).
+                filter(document("index")).
             when().
                 post("/api/db/upload").
             andReturn().
@@ -41,7 +43,8 @@ public class StorageControllerTests extends ApplicationTests {
         Assertions.assertNotNull(response);
 
         byte[] file
-            = given()
+            = given(this.spec)
+                .filter(document("index"))
             .when()
                 .get(response.getDownloadUrl())
             .asByteArray();
@@ -54,8 +57,9 @@ public class StorageControllerTests extends ApplicationTests {
     public void testFileDownloadFilesystem() throws IOException {
 
         RequestResponse responseEntity =
-            given()
+            given(this.spec)
                 .multiPart(mockMultipartFile().getFile())
+                .filter(document("index"))
             .when()
                 .post("/api/files/upload")
             .andReturn().as(RequestResponse.class);
@@ -64,9 +68,10 @@ public class StorageControllerTests extends ApplicationTests {
         Assertions.assertNotNull(responseEntity.getDownloadUrl());
 
         byte[] file
-            = given()
+            = given(this.spec)
+                .filter(document("index"))
             .when()
-            .get(responseEntity.getDownloadUrl())
+                .get(responseEntity.getDownloadUrl())
             .asByteArray();
         Assertions.assertNotNull(file);
         Assertions.assertEquals(HELLO_WORLD, new String(file, StandardCharsets.UTF_8));
@@ -75,17 +80,21 @@ public class StorageControllerTests extends ApplicationTests {
 
     @Test
     public void testFileDownloadInFilesystemFolder() throws IOException {
-        RequestResponse responseEntity = given()
-            .multiPart(mockMultipartFile().getFile())
+        RequestResponse responseEntity = given(this.spec)
+                .filter(document("index"))
+                .multiPart(mockMultipartFile().getFile())
             .when()
-            .post("/api/files/upload?path=test")
-            .andReturn().as(RequestResponse.class);
+                .post("/api/files/upload?path=test")
+           .andReturn().as(RequestResponse.class);
 
         // todo Assertions.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         Assertions.assertNotNull(responseEntity);
 
         byte[] file
-            = given().when().get(responseEntity.getDownloadUrl())
+            = given(this.spec)
+                .filter(document("index"))
+            .when()
+                .get(responseEntity.getDownloadUrl())
             .asByteArray();
 
         Assertions.assertNotNull(file);
