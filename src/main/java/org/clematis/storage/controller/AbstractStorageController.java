@@ -35,7 +35,12 @@ public abstract class AbstractStorageController {
             .path(getDownloadPath())
             .path(attachment.getId())
             .toUriString();
-        return new RequestResponse(attachment.getFileName(), downloadUrl, file, size);
+        return new RequestResponse(
+            attachment.getFileName(),
+            downloadUrl,
+            file,
+            size
+        );
     }
 
     @PostMapping("/upload")

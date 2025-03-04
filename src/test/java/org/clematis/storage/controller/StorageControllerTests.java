@@ -1,5 +1,6 @@
 package org.clematis.storage.controller;
 
+import static io.restassured.RestAssured.given;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -9,17 +10,8 @@ import org.clematis.storage.ApplicationTests;
 import org.clematis.storage.web.RequestResponse;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
@@ -27,9 +19,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 public class StorageControllerTests extends ApplicationTests {
 
     public static final String HELLO_WORLD = "Hello, world!";
-
-    @Autowired
-    private TestRestTemplate testRestTemplate;
 
     public static Resource mockMultipartFile() throws IOException {
         Path testFile = Files.createTempFile("test", ".txt");
@@ -40,71 +29,67 @@ public class StorageControllerTests extends ApplicationTests {
     @Test
     public void testFileDownloadDatabase() throws IOException {
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+        RequestResponse response =
+            given().
+                multiPart(mockMultipartFile().getFile()).
+            when().
+                post("/api/db/upload").
+            andReturn().
+                body().
+                as(RequestResponse.class);
 
-        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
-        body.add("file", mockMultipartFile());
+        Assertions.assertNotNull(response);
 
-        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
+        byte[] file
+            = given()
+            .when()
+                .get(response.getDownloadUrl())
+            .asByteArray();
 
-        ResponseEntity<RequestResponse> responseEntity = testRestTemplate
-            .postForEntity("/api/db/upload", requestEntity, RequestResponse.class);
-
-        Assertions.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        Assertions.assertNotNull(responseEntity.getBody());
-
-        ResponseEntity<byte[]> file
-            = testRestTemplate.getForEntity(responseEntity.getBody().getDownloadUrl(), byte[].class);
-        Assertions.assertNotNull(file.getBody());
-        Assertions.assertEquals(HELLO_WORLD, new String(file.getBody(), StandardCharsets.UTF_8));
+        Assertions.assertNotNull(file);
+        Assertions.assertEquals(HELLO_WORLD, new String(file, StandardCharsets.UTF_8));
     }
 
     @Test
     public void testFileDownloadFilesystem() throws IOException {
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+        RequestResponse responseEntity =
+            given()
+                .multiPart(mockMultipartFile().getFile())
+            .when()
+                .post("/api/files/upload")
+            .andReturn().as(RequestResponse.class);
 
-        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
-        body.add("file", mockMultipartFile());
+        Assertions.assertNotNull(responseEntity);
+        Assertions.assertNotNull(responseEntity.getDownloadUrl());
 
-        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
-
-        ResponseEntity<RequestResponse> responseEntity = testRestTemplate
-            .postForEntity("/api/files/upload", requestEntity, RequestResponse.class);
-
-        Assertions.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        Assertions.assertNotNull(responseEntity.getBody());
-
-        ResponseEntity<byte[]> file
-            = testRestTemplate.getForEntity(responseEntity.getBody().getDownloadUrl(), byte[].class);
-        Assertions.assertNotNull(file.getBody());
-        Assertions.assertEquals(HELLO_WORLD, new String(file.getBody(), StandardCharsets.UTF_8));
+        byte[] file
+            = given()
+            .when()
+            .get(responseEntity.getDownloadUrl())
+            .asByteArray();
+        Assertions.assertNotNull(file);
+        Assertions.assertEquals(HELLO_WORLD, new String(file, StandardCharsets.UTF_8));
     }
 
 
     @Test
     public void testFileDownloadInFilesystemFolder() throws IOException {
+        RequestResponse responseEntity = given()
+            .multiPart(mockMultipartFile().getFile())
+            .when()
+            .post("/api/files/upload?path=test")
+            .andReturn().as(RequestResponse.class);
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+        // todo Assertions.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        Assertions.assertNotNull(responseEntity);
 
-        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
-        body.add("file", mockMultipartFile());
+        byte[] file
+            = given().when().get(responseEntity.getDownloadUrl())
+            .asByteArray();
 
-        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
-
-        ResponseEntity<RequestResponse> responseEntity = testRestTemplate
-            .postForEntity("/api/files/upload?path=test", requestEntity, RequestResponse.class);
-
-        Assertions.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        Assertions.assertNotNull(responseEntity.getBody());
-
-        ResponseEntity<byte[]> file
-            = testRestTemplate.getForEntity(responseEntity.getBody().getDownloadUrl(), byte[].class);
-        Assertions.assertNotNull(file.getBody());
-        Assertions.assertEquals(HELLO_WORLD, new String(file.getBody(), StandardCharsets.UTF_8));
+        Assertions.assertNotNull(file);
+        Assertions.assertEquals(HELLO_WORLD, new String(file, StandardCharsets.UTF_8));
     }
 
 

@@ -58,8 +58,6 @@
 
     <logger name="org.clematis" level="${LOG_LEVEL}"/>
     <logger name="jworkspace" level="${LOG_LEVEL}"/>
-    <logger name="org.apache" additivity="false"/>
-    <logger name="httpclient.wire" additivity="false"/>
     <logger name="org.springframework" level="${LOG_LEVEL}"/>
-    <logger name="org.springframework.retry" level="${LOG_LEVEL}"/>
+
 </configuration>
