@@ -1,15 +1,26 @@
 plugins {
     id 'java'
-    id "org.springframework.boot" version "3.3.5"
+    id 'jacoco'
+    id 'checkstyle'
+
+    id 'org.springframework.boot' version '3.4.3'
     id 'io.spring.dependency-management' version '1.1.4'
 
     id 'com.github.spotbugs' version '6.0.7'
-    id 'jacoco'
-    id 'checkstyle'
+
+    id "com.palantir.docker" version "0.36.0"
+    id "com.palantir.docker-run" version "0.36.0"
+    id "com.palantir.docker-compose" version "0.36.0"
+
+    id "org.springdoc.openapi-gradle-plugin" version "1.9.0"
+}
+
+repositories {
+    mavenCentral()
 }
 
 group = 'org.clematis'
-version = '1.0.0-SNAPSHOT'
+version = '1.0.0'
 
 java {
     sourceCompatibility = '17'
@@ -21,17 +32,14 @@ configurations {
     }
 }
 
-repositories {
-    mavenCentral()
-}
-
 dependencies {
     annotationProcessor 'org.projectlombok:lombok'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
     compileOnly (
         'org.projectlombok:lombok',
-        "com.github.spotbugs:spotbugs:4.8.4",
-        "com.google.code.findbugs:annotations:3.0.1u2"
+        'com.github.spotbugs:spotbugs:4.8.4',
+        'com.google.code.findbugs:annotations:3.0.1u2',
     )
     checkstyle "com.puppycrawl.tools:checkstyle:10.9.3"
 
@@ -42,18 +50,17 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-rest'
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
-    implementation 'org.springdoc:springdoc-openapi-ui:1.8.0'
-    implementation 'org.springdoc:springdoc-openapi-security:1.8.0'
-    implementation 'org.springdoc:springdoc-openapi-hateoas:1.8.0'
-    implementation 'org.springdoc:springdoc-openapi-data-rest:1.8.0'
+    runtimeOnly 'com.mysql:mysql-connector-j'
+    runtimeOnly 'com.h2database:h2'
+    
+    implementation 'org.springdoc:springdoc-openapi-starter-common:2.8.5'
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.5'
 
     implementation 'org.glassfish.main.external:jmxremote_optional-repackaged:5.0'
     // to use regexp in logback.xml
     implementation 'org.codehaus.janino:janino:3.1.12'
 
-    runtimeOnly 'com.mysql:mysql-connector-j'
-    runtimeOnly 'com.h2database:h2'
-
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.34'
     testCompileOnly (
             "com.github.spotbugs:spotbugs:4.8.4",
             "com.google.code.findbugs:annotations:3.0.1u2",
@@ -68,6 +75,34 @@ dependencies {
     testImplementation 'org.apache.httpcomponents.client5:httpclient5'
     testImplementation 'org.testcontainers:junit-jupiter'
     testImplementation 'org.testcontainers:mysql'
+}
+
+// ------------ Checkstyle configuration  ---------
+checkstyle {
+    configProperties.configFile = file("${project.rootDir}/config/checkstyle/checkstyle.xml")
+    configProperties.checkstyleSuppressionFile = file("${project.rootDir}/config/checkstyle/suppressions.xml")
+}
+
+tasks.register('checkstyleReport') {
+    doLast {
+        if (file("${buildDir}/reports/checkstyle/${project.ext.checkType}.xml").exists()) {
+            ant.xslt(in: "${buildDir}/reports/checkstyle/${project.ext.checkType}.xml",
+                    style: "${project.rootDir}/config/checkstyle/checkstyle.xsl",
+                    out: "${buildDir}/reports/checkstyle/checkstyle_${project.ext.checkType}.html")
+        }
+    }
+}
+
+tasks.withType(Checkstyle).configureEach {
+    exclude '**/*Test*'
+}
+
+// ------------ Open API configuration  ---------
+
+openApi {
+    outputDir.set(file("docs"))
+    outputFileName.set("swagger.json")
+    waitTimeInSeconds.set(10)
 }
 
 // ------------ JaCoCo configuration  ---------
@@ -104,49 +139,64 @@ jacocoTestReport {
     executionData fileTree(project.rootDir.absolutePath).include("jacoco/*.exec")
 }
 
+// Share sources folder with other projects for aggregated JaCoCo reports
+configurations.create('transitiveSourcesElements') {
+    visible = false
+    canBeResolved = false
+    canBeConsumed = true
+    extendsFrom(configurations.implementation)
+    attributes {
+        attribute(Usage.USAGE_ATTRIBUTE, objects.named(Usage, Usage.JAVA_RUNTIME))
+        attribute(Category.CATEGORY_ATTRIBUTE, objects.named(Category, Category.DOCUMENTATION))
+        attribute(DocsType.DOCS_TYPE_ATTRIBUTE, objects.named(DocsType, 'source-folders'))
+    }
+    sourceSets.main.java.srcDirs.forEach {
+        outgoing.artifact(it)
+    }
+}
+
+// Share the coverage data to be aggregated for the whole product
+configurations.create('coverageDataElements') {
+    visible = false
+    canBeResolved = false
+    canBeConsumed = true
+    extendsFrom(configurations.implementation)
+    attributes {
+        attribute(Usage.USAGE_ATTRIBUTE, objects.named(Usage, Usage.JAVA_RUNTIME))
+        attribute(Category.CATEGORY_ATTRIBUTE, objects.named(Category, Category.DOCUMENTATION))
+        attribute(DocsType.DOCS_TYPE_ATTRIBUTE, objects.named(DocsType, 'jacoco-coverage-data'))
+    }
+    // This will cause the test task to run if the coverage data is requested by the aggregation task
+    outgoing.artifact(tasks.named("test").map { task ->
+        task.extensions.getByType(JacocoTaskExtension).destinationFile
+    })
+}
+
 // ------------ Spotbugs configuration  ---------
-spotbugsMain {
-    reports {
-        xml {
-            enabled = false
-        }
-        html {
-            enabled = true
-            destination = file("$buildDir/reports/spotbugs/main/spotbugs.html")
-        }
-    }
+
+spotbugs {
+    reportsDir = file("${layout.buildDirectory.asFile.get()}/reports/spotbugs/main/spotbugs.html")
+    ignoreFailures = true
 }
 
-spotbugsTest {
-    reports {
-        xml {
-            enabled = false
-        }
-        html {
-            enabled = true
-            destination = file("$buildDir/reports/spotbugs/test/spotbugs.html")
-        }
-    }
+// ----------- Docker configuration -------------
+
+docker {
+    name = "atroshin/${project.name}:${version}"
+    dockerfile = file('Dockerfile')
+    copySpec.from("${buildDir}").into("build")
+    pull true
+    noCache true
 }
 
-// ------------ Checkstyle configuration  ---------
-checkstyle {
-    configProperties.configFile = file("${project.rootDir}/config/checkstyle/checkstyle.xml")
-    configProperties.checkstyleSuppressionFile = file("${project.rootDir}/config/checkstyle/suppressions.xml")
+dockerCompose {
+    dockerComposeFile file("${project.rootDir}/docker/docker-compose.yml")
 }
 
-tasks.register('checkstyleReport') {
-    doLast {
-        if (file("${buildDir}/reports/checkstyle/${project.ext.checkType}.xml").exists()) {
-            ant.xslt(in: "${buildDir}/reports/checkstyle/${project.ext.checkType}.xml",
-                    style: "${project.rootDir}/config/checkstyle/checkstyle.xsl",
-                    out: "${buildDir}/reports/checkstyle/checkstyle_${project.ext.checkType}.html")
-        }
-    }
-}
-
-tasks.withType(Checkstyle).configureEach {
-    exclude '**/*Test*'
+dockerRun {
+    name 'clematis.storage.api'
+    image "atroshin/${project.name}:${version}"
+    ports '18088:8080'
 }
 
 springBoot {

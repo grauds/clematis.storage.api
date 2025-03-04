@@ -1,0 +1,2268 @@
+{
+	"info": {
+		"_postman_id": "1aee8456-ee5f-4457-a9f5-659d9f2fb9a1",
+		"name": "Storage API",
+		"description": "Clematis Storage API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "900216"
+	},
+	"item": [
+		{
+			"name": "api",
+			"item": [
+				{
+					"name": "profile",
+					"item": [
+						{
+							"name": "List all forms of metadata",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/hal+json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/profile",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"profile"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/hal+json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/profile",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"profile"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/hal+json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"_links\": {\n    \"anim_a\": {\n      \"href\": \"<string>\",\n      \"hreflang\": \"<string>\",\n      \"title\": \"<string>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"name\": \"<string>\",\n      \"templated\": \"<boolean>\"\n    }\n  }\n}"
+								}
+							]
+						},
+						{
+							"name": "Storage entities descriptor",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/profile/storageEntities",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"profile",
+										"storageEntities"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/profile/storageEntities",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"profile",
+												"storageEntities"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/alps+json"
+										}
+									],
+									"cookie": [],
+									"body": "\"<string>\""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "storageEntities",
+					"item": [
+						{
+							"name": "{id}",
+							"item": [
+								{
+									"name": "Get storage entity by id",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/hal+json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/storageEntities/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"storageEntities",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "<string>",
+													"description": "(Required) "
+												}
+											]
+										},
+										"description": "get-storageentity"
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/hal+json"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/storageEntities/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"storageEntities",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "<string>",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/hal+json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"fileName\": \"<string>\",\n  \"contentType\": \"<string>\",\n  \"data\": \"<byte>\",\n  \"_links\": {\n    \"Excepteur_b\": {\n      \"href\": \"<string>\",\n      \"hreflang\": \"<string>\",\n      \"title\": \"<string>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"name\": \"<string>\",\n      \"templated\": \"<boolean>\"\n    },\n    \"proident32\": {\n      \"href\": \"<string>\",\n      \"hreflang\": \"<string>\",\n      \"title\": \"<string>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"name\": \"<string>\",\n      \"templated\": \"<boolean>\"\n    }\n  }\n}"
+										},
+										{
+											"name": "Not Found",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/storageEntities/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"storageEntities",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "<string>",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								},
+								{
+									"name": "Update a storage entity",
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/hal+json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"id\": \"<string>\",\n  \"fileName\": \"<string>\",\n  \"contentType\": \"<string>\",\n  \"data\": \"<byte>\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/storageEntities/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"storageEntities",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "<string>",
+													"description": "(Required) "
+												}
+											]
+										},
+										"description": "update-storageentity"
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "PUT",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/hal+json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"id\": \"<string>\",\n  \"fileName\": \"<string>\",\n  \"contentType\": \"<string>\",\n  \"data\": \"<byte>\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/storageEntities/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"storageEntities",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "<string>",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/hal+json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"fileName\": \"<string>\",\n  \"contentType\": \"<string>\",\n  \"data\": \"<byte>\",\n  \"_links\": {\n    \"Excepteur_b\": {\n      \"href\": \"<string>\",\n      \"hreflang\": \"<string>\",\n      \"title\": \"<string>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"name\": \"<string>\",\n      \"templated\": \"<boolean>\"\n    },\n    \"proident32\": {\n      \"href\": \"<string>\",\n      \"hreflang\": \"<string>\",\n      \"title\": \"<string>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"name\": \"<string>\",\n      \"templated\": \"<boolean>\"\n    }\n  }\n}"
+										},
+										{
+											"name": "Created",
+											"originalRequest": {
+												"method": "PUT",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/hal+json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"id\": \"<string>\",\n  \"fileName\": \"<string>\",\n  \"contentType\": \"<string>\",\n  \"data\": \"<byte>\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/storageEntities/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"storageEntities",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "<string>",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "Created",
+											"code": 201,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/hal+json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"fileName\": \"<string>\",\n  \"contentType\": \"<string>\",\n  \"data\": \"<byte>\",\n  \"_links\": {\n    \"Excepteur_b\": {\n      \"href\": \"<string>\",\n      \"hreflang\": \"<string>\",\n      \"title\": \"<string>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"name\": \"<string>\",\n      \"templated\": \"<boolean>\"\n    },\n    \"proident32\": {\n      \"href\": \"<string>\",\n      \"hreflang\": \"<string>\",\n      \"title\": \"<string>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"name\": \"<string>\",\n      \"templated\": \"<boolean>\"\n    }\n  }\n}"
+										},
+										{
+											"name": "No Content",
+											"originalRequest": {
+												"method": "PUT",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"id\": \"<string>\",\n  \"fileName\": \"<string>\",\n  \"contentType\": \"<string>\",\n  \"data\": \"<byte>\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/storageEntities/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"storageEntities",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "<string>",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "No Content",
+											"code": 204,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								},
+								{
+									"name": "Delete a storage entity",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/storageEntities/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"storageEntities",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "<string>",
+													"description": "(Required) "
+												}
+											]
+										},
+										"description": "delete-storageentity"
+									},
+									"response": [
+										{
+											"name": "No Content",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/storageEntities/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"storageEntities",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "<string>",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "No Content",
+											"code": 204,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Not Found",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/storageEntities/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"storageEntities",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "<string>",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								},
+								{
+									"name": "Patch a storage entity",
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/hal+json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"id\": \"<string>\",\n  \"fileName\": \"<string>\",\n  \"contentType\": \"<string>\",\n  \"data\": \"<byte>\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/storageEntities/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"storageEntities",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "<string>",
+													"description": "(Required) "
+												}
+											]
+										},
+										"description": "patch-storageentity"
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "PATCH",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/hal+json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"id\": \"<string>\",\n  \"fileName\": \"<string>\",\n  \"contentType\": \"<string>\",\n  \"data\": \"<byte>\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/storageEntities/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"storageEntities",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "<string>",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/hal+json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"fileName\": \"<string>\",\n  \"contentType\": \"<string>\",\n  \"data\": \"<byte>\",\n  \"_links\": {\n    \"Excepteur_b\": {\n      \"href\": \"<string>\",\n      \"hreflang\": \"<string>\",\n      \"title\": \"<string>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"name\": \"<string>\",\n      \"templated\": \"<boolean>\"\n    },\n    \"proident32\": {\n      \"href\": \"<string>\",\n      \"hreflang\": \"<string>\",\n      \"title\": \"<string>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"name\": \"<string>\",\n      \"templated\": \"<boolean>\"\n    }\n  }\n}"
+										},
+										{
+											"name": "No Content",
+											"originalRequest": {
+												"method": "PATCH",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"id\": \"<string>\",\n  \"fileName\": \"<string>\",\n  \"contentType\": \"<string>\",\n  \"data\": \"<byte>\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/storageEntities/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"storageEntities",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "<string>",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "No Content",
+											"code": 204,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "Get storage entities paged",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/hal+json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/storageEntities?page=0&size=20&sort=<string>&sort=<string>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"storageEntities"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "0",
+											"description": "Zero-based page index (0..N)"
+										},
+										{
+											"key": "size",
+											"value": "20",
+											"description": "The size of the page to be returned"
+										},
+										{
+											"key": "sort",
+											"value": "<string>",
+											"description": "Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported."
+										},
+										{
+											"key": "sort",
+											"value": "<string>",
+											"description": "Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported."
+										}
+									]
+								},
+								"description": "get-storageentity"
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/hal+json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/storageEntities?page=0&size=20&sort=<string>&sort=<string>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"storageEntities"
+											],
+											"query": [
+												{
+													"key": "page",
+													"value": "0"
+												},
+												{
+													"key": "size",
+													"value": "20"
+												},
+												{
+													"key": "sort",
+													"value": "<string>"
+												},
+												{
+													"key": "sort",
+													"value": "<string>"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/hal+json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"_embedded\": {\n    \"storageEntities\": [\n      {\n        \"fileName\": \"<string>\",\n        \"contentType\": \"<string>\",\n        \"data\": \"<byte>\",\n        \"_links\": {\n          \"dolorec7\": {\n            \"href\": \"<string>\",\n            \"hreflang\": \"<string>\",\n            \"title\": \"<string>\",\n            \"type\": \"<string>\",\n            \"deprecation\": \"<string>\",\n            \"profile\": \"<string>\",\n            \"name\": \"<string>\",\n            \"templated\": \"<boolean>\"\n          },\n          \"autee50\": {\n            \"href\": \"<string>\",\n            \"hreflang\": \"<string>\",\n            \"title\": \"<string>\",\n            \"type\": \"<string>\",\n            \"deprecation\": \"<string>\",\n            \"profile\": \"<string>\",\n            \"name\": \"<string>\",\n            \"templated\": \"<boolean>\"\n          },\n          \"deseruntde\": {\n            \"href\": \"<string>\",\n            \"hreflang\": \"<string>\",\n            \"title\": \"<string>\",\n            \"type\": \"<string>\",\n            \"deprecation\": \"<string>\",\n            \"profile\": \"<string>\",\n            \"name\": \"<string>\",\n            \"templated\": \"<boolean>\"\n          }\n        }\n      },\n      {\n        \"fileName\": \"<string>\",\n        \"contentType\": \"<string>\",\n        \"data\": \"<byte>\",\n        \"_links\": {\n          \"esse850\": {\n            \"href\": \"<string>\",\n            \"hreflang\": \"<string>\",\n            \"title\": \"<string>\",\n            \"type\": \"<string>\",\n            \"deprecation\": \"<string>\",\n            \"profile\": \"<string>\",\n            \"name\": \"<string>\",\n            \"templated\": \"<boolean>\"\n          }\n        }\n      }\n    ]\n  },\n  \"_links\": {\n    \"incididunt_8\": {\n      \"href\": \"<string>\",\n      \"hreflang\": \"<string>\",\n      \"title\": \"<string>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"name\": \"<string>\",\n      \"templated\": \"<boolean>\"\n    }\n  },\n  \"page\": {\n    \"size\": \"<long>\",\n    \"totalElements\": \"<long>\",\n    \"totalPages\": \"<long>\",\n    \"number\": \"<long>\"\n  }\n}"
+								}
+							]
+						},
+						{
+							"name": "Create a storage entity",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/hal+json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": \"<string>\",\n  \"fileName\": \"<string>\",\n  \"contentType\": \"<string>\",\n  \"data\": \"<byte>\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/storageEntities",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"storageEntities"
+									]
+								},
+								"description": "create-storageentity"
+							},
+							"response": [
+								{
+									"name": "Created",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/hal+json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"id\": \"<string>\",\n  \"fileName\": \"<string>\",\n  \"contentType\": \"<string>\",\n  \"data\": \"<byte>\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/storageEntities",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"storageEntities"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/hal+json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"fileName\": \"<string>\",\n  \"contentType\": \"<string>\",\n  \"data\": \"<byte>\",\n  \"_links\": {\n    \"Excepteur_b\": {\n      \"href\": \"<string>\",\n      \"hreflang\": \"<string>\",\n      \"title\": \"<string>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"name\": \"<string>\",\n      \"templated\": \"<boolean>\"\n    },\n    \"proident32\": {\n      \"href\": \"<string>\",\n      \"hreflang\": \"<string>\",\n      \"title\": \"<string>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"name\": \"<string>\",\n      \"templated\": \"<boolean>\"\n    }\n  }\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "files",
+					"item": [
+						{
+							"name": "upload",
+							"item": [
+								{
+									"name": "upload",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/hal+json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"file\": \"<binary>\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/files/upload?path=<string>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"files",
+												"upload"
+											],
+											"query": [
+												{
+													"key": "path",
+													"value": "<string>"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/hal+json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"file\": \"<binary>\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/files/upload?path=<string>",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"files",
+														"upload"
+													],
+													"query": [
+														{
+															"key": "path",
+															"value": "<string>"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/hal+json"
+												}
+											],
+											"cookie": [],
+											"body": "\"<object>\""
+										}
+									]
+								},
+								{
+									"name": "upload batch",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/hal+json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/files/upload/batch?files=<binary>&files=<binary>&path=<string>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"files",
+												"upload",
+												"batch"
+											],
+											"query": [
+												{
+													"key": "files",
+													"value": "<binary>",
+													"description": "(Required) "
+												},
+												{
+													"key": "files",
+													"value": "<binary>",
+													"description": "(Required) "
+												},
+												{
+													"key": "path",
+													"value": "<string>"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/hal+json"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/files/upload/batch?files=<binary>&files=<binary>&path=<string>",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"files",
+														"upload",
+														"batch"
+													],
+													"query": [
+														{
+															"key": "files",
+															"value": "<binary>"
+														},
+														{
+															"key": "files",
+															"value": "<binary>"
+														},
+														{
+															"key": "path",
+															"value": "<string>"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/hal+json"
+												}
+											],
+											"cookie": [],
+											"body": "\"<object>\""
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "Get all files",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/hal+json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/files/get",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"files",
+										"get"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/hal+json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/files/get",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"files",
+												"get"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/hal+json"
+										}
+									],
+									"cookie": [],
+									"body": "[\n  {\n    \"fileName\": \"<string>\",\n    \"downloadUrl\": \"<string>\",\n    \"fileType\": \"<string>\",\n    \"fileSize\": \"<long>\"\n  },\n  {\n    \"fileName\": \"<string>\",\n    \"downloadUrl\": \"<string>\",\n    \"fileType\": \"<string>\",\n    \"fileSize\": \"<long>\"\n  }\n]"
+								}
+							]
+						},
+						{
+							"name": "Get a file",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/hal+json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/files/download/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"files",
+										"download",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "<string>",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/hal+json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/files/download/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"files",
+												"download",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "<string>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/hal+json"
+										}
+									],
+									"cookie": [],
+									"body": "\"<object>\""
+								}
+							]
+						},
+						{
+							"name": "Delete a file",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/files/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"files",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "<string>",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/files/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"files",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "<string>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "db",
+					"item": [
+						{
+							"name": "upload",
+							"item": [
+								{
+									"name": "upload to DB",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/hal+json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"file\": \"<binary>\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/db/upload?path=<string>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"db",
+												"upload"
+											],
+											"query": [
+												{
+													"key": "path",
+													"value": "<string>"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/hal+json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"file\": \"<binary>\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/db/upload?path=<string>",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"db",
+														"upload"
+													],
+													"query": [
+														{
+															"key": "path",
+															"value": "<string>"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/hal+json"
+												}
+											],
+											"cookie": [],
+											"body": "\"<object>\""
+										}
+									]
+								},
+								{
+									"name": "upload batch to DB",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/hal+json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/db/upload/batch?files=<binary>&files=<binary>&path=<string>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"db",
+												"upload",
+												"batch"
+											],
+											"query": [
+												{
+													"key": "files",
+													"value": "<binary>",
+													"description": "(Required) "
+												},
+												{
+													"key": "files",
+													"value": "<binary>",
+													"description": "(Required) "
+												},
+												{
+													"key": "path",
+													"value": "<string>"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/hal+json"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/db/upload/batch?files=<binary>&files=<binary>&path=<string>",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"db",
+														"upload",
+														"batch"
+													],
+													"query": [
+														{
+															"key": "files",
+															"value": "<binary>"
+														},
+														{
+															"key": "files",
+															"value": "<binary>"
+														},
+														{
+															"key": "path",
+															"value": "<string>"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/hal+json"
+												}
+											],
+											"cookie": [],
+											"body": "\"<object>\""
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "Get all files from DB",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/hal+json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/db/get",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"db",
+										"get"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/hal+json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/db/get",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"db",
+												"get"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/hal+json"
+										}
+									],
+									"cookie": [],
+									"body": "[\n  {\n    \"fileName\": \"<string>\",\n    \"downloadUrl\": \"<string>\",\n    \"fileType\": \"<string>\",\n    \"fileSize\": \"<long>\"\n  },\n  {\n    \"fileName\": \"<string>\",\n    \"downloadUrl\": \"<string>\",\n    \"fileType\": \"<string>\",\n    \"fileSize\": \"<long>\"\n  }\n]"
+								}
+							]
+						},
+						{
+							"name": "Get a file from DB",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/hal+json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/db/download/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"db",
+										"download",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "<string>",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/hal+json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/db/download/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"db",
+												"download",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "<string>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/hal+json"
+										}
+									],
+									"cookie": [],
+									"body": "\"<object>\""
+								}
+							]
+						},
+						{
+							"name": "Delete a file from DB",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/db/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"db",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "<string>",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/db/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"db",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "<string>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "actuator",
+			"item": [
+				{
+					"name": "env",
+					"item": [
+						{
+							"name": "Actuator web endpoint 'env'",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/vnd.spring-boot.actuator.v3+json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/actuator/env?pattern=<string>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"actuator",
+										"env"
+									],
+									"query": [
+										{
+											"key": "pattern",
+											"value": "<string>"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/vnd.spring-boot.actuator.v3+json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/actuator/env?pattern=<string>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"actuator",
+												"env"
+											],
+											"query": [
+												{
+													"key": "pattern",
+													"value": "<string>"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/vnd.spring-boot.actuator.v3+json"
+										}
+									],
+									"cookie": [],
+									"body": "\"<object>\""
+								}
+							]
+						},
+						{
+							"name": "Actuator web endpoint 'env-toMatch'",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/vnd.spring-boot.actuator.v3+json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/actuator/env/:toMatch",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"actuator",
+										"env",
+										":toMatch"
+									],
+									"variable": [
+										{
+											"key": "toMatch",
+											"value": "<string>",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/vnd.spring-boot.actuator.v3+json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/actuator/env/:toMatch",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"actuator",
+												"env",
+												":toMatch"
+											],
+											"variable": [
+												{
+													"key": "toMatch",
+													"value": "<string>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/vnd.spring-boot.actuator.v3+json"
+										}
+									],
+									"cookie": [],
+									"body": "\"<object>\""
+								},
+								{
+									"name": "Not Found",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/actuator/env/:toMatch",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"actuator",
+												"env",
+												":toMatch"
+											],
+											"variable": [
+												{
+													"key": "toMatch",
+													"value": "<string>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Actuator root web endpoint",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/vnd.spring-boot.actuator.v3+json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/actuator",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"actuator"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/vnd.spring-boot.actuator.v3+json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/actuator",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"actuator"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/vnd.spring-boot.actuator.v3+json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"pariatur2\": {\n    \"occaecat_db\": {\n      \"href\": \"<string>\",\n      \"hreflang\": \"<string>\",\n      \"title\": \"<string>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"name\": \"<string>\",\n      \"templated\": \"<boolean>\"\n    }\n  },\n  \"labore5\": {\n    \"Ut_f\": {\n      \"href\": \"<string>\",\n      \"hreflang\": \"<string>\",\n      \"title\": \"<string>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"name\": \"<string>\",\n      \"templated\": \"<boolean>\"\n    }\n  },\n  \"aliquip_6\": {\n    \"quis00\": {\n      \"href\": \"<string>\",\n      \"hreflang\": \"<string>\",\n      \"title\": \"<string>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"name\": \"<string>\",\n      \"templated\": \"<boolean>\"\n    },\n    \"nulla_6d\": {\n      \"href\": \"<string>\",\n      \"hreflang\": \"<string>\",\n      \"title\": \"<string>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"name\": \"<string>\",\n      \"templated\": \"<boolean>\"\n    }\n  },\n  \"ex_f2\": {\n    \"Duis_1\": {\n      \"href\": \"<string>\",\n      \"hreflang\": \"<string>\",\n      \"title\": \"<string>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"name\": \"<string>\",\n      \"templated\": \"<boolean>\"\n    },\n    \"dolorc9c\": {\n      \"href\": \"<string>\",\n      \"hreflang\": \"<string>\",\n      \"title\": \"<string>\",\n      \"type\": \"<string>\",\n      \"deprecation\": \"<string>\",\n      \"profile\": \"<string>\",\n      \"name\": \"<string>\",\n      \"templated\": \"<boolean>\"\n    }\n  }\n}"
+						}
+					]
+				},
+				{
+					"name": "Actuator web endpoint 'info'",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/vnd.spring-boot.actuator.v3+json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/actuator/info",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"actuator",
+								"info"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/vnd.spring-boot.actuator.v3+json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/actuator/info",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"actuator",
+										"info"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/vnd.spring-boot.actuator.v3+json"
+								}
+							],
+							"cookie": [],
+							"body": "\"<object>\""
+						}
+					]
+				},
+				{
+					"name": "Actuator web endpoint 'health'",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/vnd.spring-boot.actuator.v3+json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/actuator/health",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"actuator",
+								"health"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/vnd.spring-boot.actuator.v3+json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/actuator/health",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"actuator",
+										"health"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/vnd.spring-boot.actuator.v3+json"
+								}
+							],
+							"cookie": [],
+							"body": "\"<object>\""
+						}
+					]
+				},
+				{
+					"name": "Actuator web endpoint 'beans'",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/vnd.spring-boot.actuator.v3+json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/actuator/beans",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"actuator",
+								"beans"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/vnd.spring-boot.actuator.v3+json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/actuator/beans",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"actuator",
+										"beans"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/vnd.spring-boot.actuator.v3+json"
+								}
+							],
+							"cookie": [],
+							"body": "\"<object>\""
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "manual requests",
+			"item": [
+				{
+					"name": "Download all files",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{storage_host}}/api/files/get",
+							"protocol": "http",
+							"host": [
+								"{{storage_host}}"
+							],
+							"path": [
+								"api",
+								"files",
+								"get"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Download a sample file",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{storage_host}}/api/db/download/1f021105-782c-470d-93ec-f7d775e958f1",
+							"protocol": "http",
+							"host": [
+								"{{storage_host}}"
+							],
+							"path": [
+								"api",
+								"db",
+								"download",
+								"1f021105-782c-470d-93ec-f7d775e958f1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Upload one file",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/Users/antroshin/Library/Mobile Documents/com~apple~CloudDocs/profile.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://{{storage_host}}/api/db/upload",
+							"protocol": "http",
+							"host": [
+								"{{storage_host}}"
+							],
+							"path": [
+								"api",
+								"db",
+								"upload"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Upload one file to filesystem",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/Users/antroshin/Documents/clematis.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://{{storage_host}}/api/files/upload",
+							"protocol": "http",
+							"host": [
+								"{{storage_host}}"
+							],
+							"path": [
+								"api",
+								"files",
+								"upload"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Upload multiple files",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "files",
+									"type": "file",
+									"src": [
+										"/Users/antroshin/Documents/boombox.png",
+										"/Users/antroshin/Documents/clematis.png",
+										"/Users/antroshin/Documents/IMG_5667.JPG"
+									]
+								}
+							]
+						},
+						"url": {
+							"raw": "http://{{storage_host}}/api/files/upload/batch",
+							"protocol": "http",
+							"host": [
+								"{{storage_host}}"
+							],
+							"path": [
+								"api",
+								"files",
+								"upload",
+								"batch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Upload multiple files to filesystem",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "files",
+									"type": "file",
+									"src": [
+										"/Users/antroshin/Documents/boombox.png",
+										"/Users/antroshin/Documents/clematis.png",
+										"/Users/antroshin/Documents/IMG_5667.JPG"
+									]
+								}
+							]
+						},
+						"url": {
+							"raw": "http://{{storage_host}}/api/files/upload/batch",
+							"protocol": "http",
+							"host": [
+								"{{storage_host}}"
+							],
+							"path": [
+								"api",
+								"files",
+								"upload",
+								"batch"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "{{storage_host}}",
+			"type": "string"
+		}
+	]
+}
