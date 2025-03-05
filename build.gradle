@@ -13,7 +13,7 @@ plugins {
     id "com.palantir.docker-compose" version "0.36.0"
 
     id "org.springdoc.openapi-gradle-plugin" version "1.9.0"
-    id "org.asciidoctor.jvm.convert" version "3.3.2"
+    id "org.asciidoctor.jvm.convert" version "4.0.4"
 }
 
 repositories {
@@ -113,7 +113,6 @@ tasks.withType(Checkstyle).configureEach {
 openApi {
     outputDir.set(file("docs"))
     outputFileName.set("swagger.json")
-    waitTimeInSeconds.set(10)
 }
 
 // ------------ JaCoCo configuration  ---------
@@ -191,8 +190,32 @@ spotbugs {
 
 asciidoctor {
     dependsOn test
-    configurations "asciidoctorExtensions"
-    sourceDir snippetsDir
+    options doctype: 'book'
+    attributes = [
+            'source-highlighter': 'highlightjs',
+            'imagesdir'         : './images',
+            'toc'               : 'left',
+            'toclevels'         : 3,
+            'numbered'          : '',
+            'icons'             : 'font',
+            'setanchors'        : '',
+            'idprefix'          : '',
+            'idseparator'       : '-',
+            'docinfo1'          : '',
+            'safe-mode-unsafe'  : '',
+            'allow-uri-read'    : '',
+            'snippets'          : snippetsDir,
+            linkattrs           : true,
+            encoding            : 'utf-8'
+    ]
+
+    inputs.dir snippetsDir
+    outputDir "build/asciidoc"
+    sourceDir 'src/docs/asciidocs'
+    baseDir sourceDir
+    sources {
+        include 'api.adoc'
+    }
 }
 
 // ----------- Packaging ------------------------

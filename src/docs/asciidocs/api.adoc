@@ -1,0 +1,18 @@
+== Clematis Storage API
+=== Endpoints
+
+==== Get file by ID
+===== Curl example
+include::{snippets}/index/curl-request.adoc[]
+===== HTTP Request
+include::{snippets}/index/http-request.adoc[]
+===== HTTP IE Request
+include::{snippets}/index/httpie-request.adoc[]
+===== HTTP Response
+====== Success HTTP response
+include::{snippets}/index/http-response.adoc[]
+====== Response body
+include::{snippets}/index/response-body.adoc[]
+
+== REST convention
+include::rest_conv.adoc[]

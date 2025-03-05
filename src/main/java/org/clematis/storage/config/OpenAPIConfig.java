@@ -18,7 +18,7 @@ import io.swagger.v3.oas.models.info.Info;
  */
 @Configuration
 @ComponentScan(
-    basePackages = {"org.springdoc"}
+    basePackages = {"org.springdoc", "org.clematis.storage.controller"}
 )
 public class OpenAPIConfig {
 
