@@ -33,7 +33,7 @@ public class StorageControllerTests extends ApplicationTests {
         RequestResponse response =
             given(this.spec).
                 multiPart(mockMultipartFile().getFile()).
-                filter(document("index")).
+                filter(document("dbupload")).
             when().
                 post("/api/db/upload").
             andReturn().
@@ -59,7 +59,7 @@ public class StorageControllerTests extends ApplicationTests {
         RequestResponse responseEntity =
             given(this.spec)
                 .multiPart(mockMultipartFile().getFile())
-                .filter(document("index"))
+                .filter(document("upload"))
             .when()
                 .post("/api/files/upload")
             .andReturn().as(RequestResponse.class);
@@ -81,7 +81,7 @@ public class StorageControllerTests extends ApplicationTests {
     @Test
     public void testFileDownloadInFilesystemFolder() throws IOException {
         RequestResponse responseEntity = given(this.spec)
-                .filter(document("index"))
+                .filter(document("upload"))
                 .multiPart(mockMultipartFile().getFile())
             .when()
                 .post("/api/files/upload?path=test")

@@ -6,13 +6,41 @@
 include::{snippets}/index/curl-request.adoc[]
 ===== HTTP Request
 include::{snippets}/index/http-request.adoc[]
-===== HTTP IE Request
+===== HTTPie Request
 include::{snippets}/index/httpie-request.adoc[]
 ===== HTTP Response
-====== Success HTTP response
+====== Successful HTTP response
 include::{snippets}/index/http-response.adoc[]
 ====== Response body
 include::{snippets}/index/response-body.adoc[]
+
+
+==== Upload file
+===== Curl example
+include::{snippets}/upload/curl-request.adoc[]
+===== HTTP Request
+include::{snippets}/upload/http-request.adoc[]
+===== HTTPie Request
+include::{snippets}/upload/httpie-request.adoc[]
+===== HTTP Response
+====== Successful HTTP response
+include::{snippets}/upload/http-response.adoc[]
+====== Response body
+include::{snippets}/upload/response-body.adoc[]
+
+==== Upload file to database
+===== Curl example
+include::{snippets}/dbupload/curl-request.adoc[]
+===== HTTP Request
+include::{snippets}/dbupload/http-request.adoc[]
+===== HTTPie Request
+include::{snippets}/dbupload/httpie-request.adoc[]
+===== HTTP Response
+====== Successful HTTP response
+include::{snippets}/dbupload/http-response.adoc[]
+====== Response body
+include::{snippets}/dbupload/response-body.adoc[]
+
 
 == REST convention
 include::rest_conv.adoc[]
