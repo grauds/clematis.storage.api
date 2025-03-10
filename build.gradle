@@ -1,10 +1,11 @@
+import org.springframework.boot.gradle.plugin.SpringBootPlugin
+
 plugins {
     id 'java'
     id 'jacoco'
     id 'checkstyle'
 
     id 'org.springframework.boot' version '3.4.3'
-    id 'io.spring.dependency-management' version '1.1.4'
 
     id 'com.github.spotbugs' version '6.0.7'
 
@@ -35,8 +36,10 @@ configurations {
 }
 
 dependencies {
-    annotationProcessor 'org.projectlombok:lombok'
-    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    implementation platform(SpringBootPlugin.BOM_COORDINATES)
+
+    annotationProcessor 'org.projectlombok:lombok:1.18.34'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor:3.3.4'
     asciidoctorExtensions 'org.springframework.restdocs:spring-restdocs-asciidoctor'
 
     compileOnly (
@@ -46,16 +49,16 @@ dependencies {
     )
     checkstyle "com.puppycrawl.tools:checkstyle:10.9.3"
 
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools:3.3.4'
 
-    implementation "org.springframework.boot:spring-boot-starter-actuator"
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-data-rest'
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
     runtimeOnly 'com.mysql:mysql-connector-j'
     runtimeOnly 'com.h2database:h2'
-    
+
     implementation 'org.springdoc:springdoc-openapi-starter-common:2.8.5'
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.5'
 
@@ -63,16 +66,16 @@ dependencies {
     // to use regexp in logback.xml
     implementation 'org.codehaus.janino:janino:3.1.12'
 
+    testImplementation ('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.34'
     testCompileOnly (
             "com.github.spotbugs:spotbugs:4.8.4",
             "com.google.code.findbugs:annotations:3.0.1u2",
             "org.projectlombok:lombok"
     )
-
-    testImplementation ('org.springframework.boot:spring-boot-starter-test') {
-        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-    }
 
     testImplementation 'org.springframework.boot:spring-boot-testcontainers'
     testImplementation 'org.apache.httpcomponents.client5:httpclient5'
