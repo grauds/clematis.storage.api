@@ -1,25 +1,23 @@
 package org.clematis.storage.config;
 
-import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
-import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-/**
- * @author Ruslan Lagay
- */
-@Component
-public class CorsConfig implements RepositoryRestConfigurer {
+@Configuration
+@EnableWebMvc
+public class SpringWebMvcConfig implements WebMvcConfigurer {
 
     public static final String ALL_REGEXP = "/**";
     public static final String ORIGINS = "*";
 
     @SuppressWarnings("checkstyle:MagicNumber")
     @Override
-    public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config, CorsRegistry cors) {
+    public void addCorsMappings(CorsRegistry registry) {
 
-        cors.addMapping(ALL_REGEXP)
+        registry.addMapping(ALL_REGEXP)
             .allowedOrigins(ORIGINS)
             .allowedMethods(HttpMethod.GET.name(),
                 HttpMethod.POST.name(),
@@ -32,4 +30,3 @@ public class CorsConfig implements RepositoryRestConfigurer {
             .maxAge(3600);
     }
 }
-
