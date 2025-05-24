@@ -1,4 +1,9 @@
 clematis:
+  transactionId:
+    httpHeader:
+      Transaction-ID
+    logKey:
+      transactionId
   storage:
     download:
       folder: ${STORAGE_FILES_PATH}
