@@ -18,7 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
- * Service which uses database to store the uploaded resources with their binary contents.
+ * Service which uses a database to store the uploaded resources with their binary contents.
  */
 @Service
 public class DbStorageServiceImpl implements StorageService {

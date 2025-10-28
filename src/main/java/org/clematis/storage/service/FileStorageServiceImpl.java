@@ -23,7 +23,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.extern.java.Log;
 
 /**
- * Service which uses file system to store the uploaded resources with their binary contents.
+ * Service which uses a file system to store the uploaded resources with their binary contents.
  */
 @Service
 @Log
