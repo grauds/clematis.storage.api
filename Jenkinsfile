@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker {
-            image 'gradle-jdk17-docker:latest'
+            image 'gradle:8.10-jdk17'
             args '-v /var/run/docker.sock:/var/run/docker.sock'
         }
     }
@@ -13,6 +13,15 @@ pipeline {
     }
 
     stages {
+
+        stage('Install Docker CLI') {
+            steps {
+                sh '''
+                  apt-get update
+                  apt-get install -y docker.io docker-compose
+                '''
+            }
+        }
 
         stage("Verify tooling") {
             steps {
