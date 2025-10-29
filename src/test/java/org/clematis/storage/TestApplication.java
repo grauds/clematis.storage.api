@@ -1,5 +1,7 @@
 package org.clematis.storage;
 
+import java.util.Map;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
@@ -16,6 +18,7 @@ public class TestApplication {
             .withDatabaseName("testdb")
             .withUsername("test")
             .withPassword("test")
+            .withTmpFs(Map.of("/var/lib/mysql", "rw,size=1g"))
             .withNetworkMode("host");
     }
 
