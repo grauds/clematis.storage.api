@@ -79,12 +79,14 @@ public abstract class AbstractStorageController {
     public ResponseEntity<List<RequestResponse>> getAllFiles() {
         List<StorageEntity> storageEntities = getStorageService().getAllFiles();
 
-        List<RequestResponse> responses = storageEntities.stream()
+        List<RequestResponse> responses = storageEntities != null
+            ? storageEntities.stream()
             .map(storageEntity -> createResponse(storageEntity,
                     storageEntity.getContentType(),
                     storageEntity.getData().length
                 )
-            ).collect(Collectors.toList());
+            ).collect(Collectors.toList())
+            : new ArrayList<>();
 
         return ResponseEntity.ok().body(responses);
     }

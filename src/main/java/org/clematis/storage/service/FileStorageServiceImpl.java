@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -29,7 +30,7 @@ import lombok.extern.java.Log;
 @Log
 public class FileStorageServiceImpl implements StorageService {
 
-    private static final String COULDN_T_MAKE_DIRECTORY_ON_THE_SERVER = "Couldn't make directory on the server: ";
+    private static final String MAKE_DIR_ERROR_MESSAGE = "Couldn't make directory on the server: ";
 
     private final StorageEntityRepository storageEntityRepository;
 
@@ -65,18 +66,20 @@ public class FileStorageServiceImpl implements StorageService {
         File destinationFolder = !additionalPath.isEmpty()
             ? new File(this.downloadFolder, additionalPath)
             : new File(this.downloadFolder);
+
         // absolute folder plus destination file
         File destination = new File(destinationFolder, fileName).getAbsoluteFile();
-        // get temp files data before it is moved and pointer to multipart is lost
+
+        // get temp files data before it is moved, and the pointer to multipart is lost
         String contentType = file.getContentType();
 
         if ((!destinationFolder.exists() && destinationFolder.mkdirs()) || destinationFolder.exists()) {
-            // moving the file, losing multipart meta information here
+            // moving the file, losing multipart meta-information here
             file.transferTo(destination);
         } else {
-            log.log(Level.SEVERE, COULDN_T_MAKE_DIRECTORY_ON_THE_SERVER
+            log.log(Level.SEVERE, MAKE_DIR_ERROR_MESSAGE
                 + destinationFolder.getAbsolutePath());
-            throw new IOException(COULDN_T_MAKE_DIRECTORY_ON_THE_SERVER
+            throw new IOException(MAKE_DIR_ERROR_MESSAGE
                 + destinationFolder.getAbsolutePath());
         }
 
@@ -99,7 +102,8 @@ public class FileStorageServiceImpl implements StorageService {
 
     @Override
     public List<StorageEntity> getAllFiles() {
-        return null;
+
+        return new ArrayList<>();
     }
 
     /**
