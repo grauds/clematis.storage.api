@@ -17,8 +17,8 @@ pipeline {
         stage('Install Docker CLI') {
             steps {
                 sh '''
-                  apt-get update
-                  apt-get install -y docker.io docker-compose
+                  sudo apt-get update
+                  sudo apt-get install -y docker.io docker-compose curl jq
                 '''
             }
         }
