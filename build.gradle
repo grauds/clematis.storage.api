@@ -1,11 +1,10 @@
-import org.springframework.boot.gradle.plugin.SpringBootPlugin
-
 plugins {
     id 'java'
     id 'jacoco'
     id 'checkstyle'
 
-    id 'org.springframework.boot' version '3.5.0'
+    id 'org.springframework.boot' version '3.5.5'
+    id "io.spring.dependency-management" version "1.1.4"
 
     id 'com.github.spotbugs' version '6.0.7'
 
@@ -32,10 +31,9 @@ configurations {
 }
 
 dependencies {
-    implementation platform(SpringBootPlugin.BOM_COORDINATES)
 
     annotationProcessor 'org.projectlombok:lombok:1.18.34'
-    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor:3.3.4'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     asciidoctorExtensions 'org.springframework.restdocs:spring-restdocs-asciidoctor'
 
     compileOnly (
@@ -45,7 +43,7 @@ dependencies {
     )
     checkstyle "com.puppycrawl.tools:checkstyle:10.9.3"
 
-    developmentOnly 'org.springframework.boot:spring-boot-devtools:3.3.4'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
