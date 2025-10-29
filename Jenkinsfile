@@ -1,27 +1,14 @@
 pipeline {
-    agent {
-        docker {
-            image 'gradle:8.10-jdk17'
-            args '-v /var/run/docker.sock:/var/run/docker.sock'
-        }
-    }
+    agent any
     environment {
         REMOTE_HOST = "192.168.1.118"
         REMOTE_USER = "anton"
         SSH_DEST = "${REMOTE_USER}@${REMOTE_HOST}"
         REMOTE_APP_DIR = "/home/anton/deploy/storage/api"
+        SPRING_DATASOURCE_PASSWORD = 'test'
     }
 
     stages {
-
-        stage('Install Docker CLI') {
-            steps {
-                sh '''
-                  sudo apt-get update
-                  sudo apt-get install -y docker.io docker-compose curl jq
-                '''
-            }
-        }
 
         stage("Verify tooling") {
             steps {
@@ -46,7 +33,7 @@ pipeline {
 
         stage('Gradle build') {
             steps {
-                sh './gradlew clean build'
+                sh './gradlew clean build --no-daemon'
             }
 
         }
