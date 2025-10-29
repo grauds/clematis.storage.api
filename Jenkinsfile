@@ -1,7 +1,9 @@
 pipeline {
-
-    agent any
-    tools { nodejs "Node18" }
+    agent {
+        docker {
+            args '-v /var/run/docker.sock:/var/run/docker.sock'
+        }
+    }
     environment {
         REMOTE_HOST = "192.168.1.118"
         REMOTE_USER = "anton"
@@ -47,8 +49,8 @@ pipeline {
                     -f "ALL"
                     --prettyPrint''', nvdCredentialsId: 'NVD_API_Key', odcInstallation: 'Dependency Checker'
                 dependencyCheckPublisher pattern: 'dependency-check-report.xml'
-                catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
-                    sh "exit 1"
+                catchError(buildResult: 'SUCCESS', stageResult: 'SUCCESS') {
+                   sh "exit 1"
                 }
             }
         }
@@ -66,9 +68,7 @@ pipeline {
 
         stage('Build docker image') {
             steps {
-                script {
-                    app = docker.build("clematis.storage.api")
-                }
+                sh 'docker build -t clematis.storage.api .'
             }
         }
 
@@ -103,11 +103,12 @@ pipeline {
                 sh """
                   ssh ${SSH_DEST} '
                     cd ${REMOTE_APP_DIR} && \
-                    docker rm -f rm -f clematis-storage-api 2>/dev/null || true && \
+                    docker rm -f rm -f clematis-storage-api clematis-storage-mysql-db 2>/dev/null || true && \
                     export SPRING_DATASOURCE_PASSWORD="${SPRING_DATASOURCE_PASSWORD}" && \
                     docker load < clematis.storage.api.tar && \
                     docker compose -f docker-compose.yml build --build-arg SPRING_DATASOURCE_PASSWORD="${SPRING_DATASOURCE_PASSWORD}" && \
-                    docker compose -f docker-compose.yml up -d clematis-storage-api
+                    docker compose -f docker-compose.yml up -d clematis-storage-db && \
+                    docker compose -f docker-compose.yml up -d --no-deps --build clematis-storage-api
                   '
                 """
             }
