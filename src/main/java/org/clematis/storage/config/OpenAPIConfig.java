@@ -67,13 +67,6 @@ public class OpenAPIConfig {
     }
 
     @Bean
-    SwaggerUiConfigProperties swaggerUiConfig() {
-        SwaggerUiConfigProperties config = new SwaggerUiConfigProperties();
-        config.setShowCommonExtensions(true);
-        return config;
-    }
-
-    @Bean
     public GroupedOpenApi actuatorApi(WebEndpointProperties endpointProperties) {
         return GroupedOpenApi.builder()
             .group("Actuator")

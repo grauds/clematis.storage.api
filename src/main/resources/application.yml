@@ -67,4 +67,5 @@ springdoc:
     operationsSorter: method
     disable-swagger-default-url: true
     use-root-path: true
+    show-common-extensions: true
   show-actuator: true
