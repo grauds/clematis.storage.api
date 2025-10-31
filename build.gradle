@@ -53,8 +53,8 @@ dependencies {
     runtimeOnly 'com.mysql:mysql-connector-j'
     runtimeOnly 'com.h2database:h2'
 
-    implementation 'org.springdoc:springdoc-openapi-starter-common:2.8.5'
-    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.5'
+    implementation 'org.springdoc:springdoc-openapi-starter-common:2.8.13'
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.13'
 
     implementation 'org.glassfish.main.external:jmxremote_optional-repackaged:5.0'
     // to use regexp in logback.xml
