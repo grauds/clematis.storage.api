@@ -18,7 +18,7 @@ import io.swagger.v3.oas.models.info.Info;
  */
 @Configuration
 @ComponentScan(
-    basePackages = {"org.springdoc", "org.clematis.storage.controller"}
+    basePackages = {"org.springdoc", "org.clematis.storage"}
 )
 public class OpenAPIConfig {
 
@@ -34,26 +34,35 @@ public class OpenAPIConfig {
     }
 
     public Info getInfo() {
-        return new Info().title(" API")
-                .summary("Hateoas Restful API for a file storage")
-                .description("")
-                .version(buildProperties.getVersion())
-                .description(buildProperties.getName());
+        return new Info().title("Clematis Storage API")
+            .summary("Hateoas Restful API for a file storage")
+            .description(buildProperties.getName())
+            .version(buildProperties.getVersion());
     }
 
     @Bean
     public GroupedOpenApi filesApi() {
         return GroupedOpenApi.builder()
-                .group("Files")
-                .pathsToMatch("/api/files")
-                .build();
+            .group("Files")
+            .pathsToMatch("/api/files/**")
+            .addOpenApiCustomizer(openApi -> openApi.info(
+                new Info()
+                    .title("Files API")
+                    .version(buildProperties.getVersion())
+            ))
+            .build();
     }
 
     @Bean
     public GroupedOpenApi dbApi() {
         return GroupedOpenApi.builder()
             .group("Database")
-            .pathsToMatch("/api/db")
+            .pathsToMatch("/api/db/**")
+            .addOpenApiCustomizer(openApi -> openApi.info(
+                new Info()
+                    .title("Database Storage API")
+                    .version(buildProperties.getVersion())
+            ))
             .build();
     }
 
