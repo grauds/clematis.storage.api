@@ -2,7 +2,6 @@ package org.clematis.storage.config;
 
 import static org.springdoc.core.utils.Constants.ALL_PATTERN;
 import org.springdoc.core.models.GroupedOpenApi;
-import org.springdoc.core.properties.SwaggerUiConfigProperties;
 import org.springframework.boot.actuate.autoconfigure.endpoint.web.WebEndpointProperties;
 import org.springframework.boot.info.BuildProperties;
 import org.springframework.context.annotation.Bean;
