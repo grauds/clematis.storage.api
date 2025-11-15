@@ -32,16 +32,15 @@ configurations {
 
 dependencies {
 
-    annotationProcessor 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok:1.18.34'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     asciidoctorExtensions 'org.springframework.restdocs:spring-restdocs-asciidoctor'
 
     compileOnly (
-        'org.projectlombok:lombok',
-        'com.github.spotbugs:spotbugs:4.8.4',
-        'com.google.code.findbugs:annotations:3.0.1u2',
+        'org.projectlombok:lombok:1.18.34',
+        'com.github.spotbugs:spotbugs-annotations:4.8.6',
     )
-    checkstyle "com.puppycrawl.tools:checkstyle:10.9.3"
+    checkstyle "com.puppycrawl.tools:checkstyle:10.17.0"
 
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
@@ -66,14 +65,15 @@ dependencies {
 
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.34'
     testCompileOnly (
-            "com.github.spotbugs:spotbugs:4.8.4",
-            "com.google.code.findbugs:annotations:3.0.1u2",
-            "org.projectlombok:lombok"
+            "org.projectlombok:lombok:1.18.34",
+            'com.github.spotbugs:spotbugs-annotations:4.8.6'
     )
 
+    testImplementation "org.junit.jupiter:junit-jupiter:5.11.0"
+
     testImplementation 'org.springframework.boot:spring-boot-testcontainers'
-    testImplementation 'io.rest-assured:rest-assured:5.5.1'
-    testImplementation 'io.rest-assured:json-path:5.5.1'
+    testImplementation 'io.rest-assured:rest-assured:5.4.0'
+    testImplementation 'io.rest-assured:json-path:5.4.0'
     testImplementation 'org.testcontainers:junit-jupiter'
     testImplementation 'org.testcontainers:mysql'
 
