@@ -8,8 +8,9 @@ import org.springframework.web.bind.annotation.RestController;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.Getter;
 import lombok.extern.java.Log;
+
 /**
- * Spring Web MVC controller to expose endpoints to upload file to database storage
+ * Spring Web MVC controller to expose endpoints to upload the file to database storage
  */
 @Getter
 @RestController
@@ -24,6 +25,10 @@ public class StorageController extends AbstractStorageController {
         this.storageService = storageService;
     }
 
+    @Override
+    public StorageService getStorageService() {
+        return storageService;
+    }
 
     @Override
     public String getDownloadPath() {

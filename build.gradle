@@ -4,9 +4,9 @@ plugins {
     id 'checkstyle'
 
     id 'org.springframework.boot' version '3.5.5'
-    id "io.spring.dependency-management" version "1.1.4"
+    id 'io.spring.dependency-management' version '1.1.4'
 
-    id 'com.github.spotbugs' version '6.0.7'
+    id 'com.github.spotbugs' version '6.1.6'
 
     id "org.springdoc.openapi-gradle-plugin" version "1.9.0"
     id "org.asciidoctor.jvm.convert" version "4.0.4"
@@ -32,7 +32,7 @@ configurations {
 
 dependencies {
 
-    annotationProcessor 'org.projectlombok:lombok:1.18.34'
+    annotationProcessor 'org.projectlombok:lombok'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     asciidoctorExtensions 'org.springframework.restdocs:spring-restdocs-asciidoctor'
 
@@ -109,10 +109,10 @@ tasks.withType(Checkstyle).configureEach {
 openApi {
     outputDir.set(file("docs"))
     outputFileName.set("swagger.json")
+    waitTimeInSeconds.set(10)
 }
 
 // ------------ JaCoCo configuration  ---------
-
 
 tasks.named('test') {
     useJUnitPlatform()
@@ -120,6 +120,7 @@ tasks.named('test') {
 
 test {
     outputs.dir snippetsDir
+    useJUnitPlatform()
     testLogging.showStandardStreams = true
     finalizedBy jacocoTestReport
     jacoco {
@@ -176,7 +177,6 @@ configurations.create('coverageDataElements') {
 }
 
 // ------------ Spotbugs configuration  ---------
-
 spotbugs {
     reportsDir = file("${layout.buildDirectory.asFile.get()}/reports/spotbugs/main/spotbugs.html")
     ignoreFailures = true

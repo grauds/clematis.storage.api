@@ -10,7 +10,7 @@ import lombok.Getter;
 import lombok.extern.java.Log;
 
 /**
- * Spring Web MVC controller to expose endpoints to upload file to filesystem storage
+ * Spring Web MVC controller to expose endpoints to upload the file to filesystem storage
  */
 @Getter
 @RestController
@@ -23,6 +23,11 @@ public class FileStorageController extends AbstractStorageController {
 
     public FileStorageController(@Qualifier("fileStorageServiceImpl") StorageService storageService) {
         this.storageService = storageService;
+    }
+
+    @Override
+    public StorageService getStorageService() {
+        return storageService;
     }
 
     @Override
