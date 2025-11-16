@@ -1,7 +1,7 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": " API",
+    "title": "Clematis Storage API",
     "description": "Clematis Storage API",
     "version": "1.0.0",
     "summary": "Hateoas Restful API for a file storage"
@@ -327,42 +327,47 @@
         "tags": [
           "file-storage-controller"
         ],
+        "summary": "Upload a single file",
+        "description": "Uploads a file and optionally stores it under the specified path.",
         "operationId": "upload",
         "parameters": [
           {
+            "name": "file",
+            "in": "query",
+            "description": "File to upload",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "binary"
+            }
+          },
+          {
             "name": "path",
             "in": "query",
+            "description": "Optional storage path",
             "required": false,
             "schema": {
               "type": "string"
             }
           }
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "file": {
-                    "type": "string",
-                    "format": "binary"
-                  }
-                },
-                "required": [
-                  "file"
-                ]
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "File successfully uploaded",
             "content": {
               "application/hal+json": {
                 "schema": {
-                  "type": "object"
+                  "$ref": "#/components/schemas/RequestResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -375,11 +380,14 @@
         "tags": [
           "file-storage-controller"
         ],
-        "operationId": "upload_1",
+        "summary": "Upload multiple files",
+        "description": "Uploads multiple files and optionally stores them under the specified path.",
+        "operationId": "uploadBatch",
         "parameters": [
           {
             "name": "files",
             "in": "query",
+            "description": "List of files to upload",
             "required": true,
             "schema": {
               "type": "array",
@@ -392,6 +400,7 @@
           {
             "name": "path",
             "in": "query",
+            "description": "Optional storage path",
             "required": false,
             "schema": {
               "type": "string"
@@ -400,11 +409,24 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Files successfully uploaded",
             "content": {
               "application/hal+json": {
                 "schema": {
-                  "type": "object"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RequestResponse"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -417,42 +439,47 @@
         "tags": [
           "storage-controller"
         ],
-        "operationId": "upload_2",
+        "summary": "Upload a single file",
+        "description": "Uploads a file and optionally stores it under the specified path.",
+        "operationId": "upload_1",
         "parameters": [
+          {
+            "name": "file",
+            "in": "query",
+            "description": "File to upload",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "binary"
+            }
+          },
           {
             "name": "path",
             "in": "query",
+            "description": "Optional storage path",
             "required": false,
             "schema": {
               "type": "string"
             }
           }
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "file": {
-                    "type": "string",
-                    "format": "binary"
-                  }
-                },
-                "required": [
-                  "file"
-                ]
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "File successfully uploaded",
             "content": {
               "application/hal+json": {
                 "schema": {
-                  "type": "object"
+                  "$ref": "#/components/schemas/RequestResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -465,11 +492,14 @@
         "tags": [
           "storage-controller"
         ],
-        "operationId": "upload_3",
+        "summary": "Upload multiple files",
+        "description": "Uploads multiple files and optionally stores them under the specified path.",
+        "operationId": "uploadBatch_1",
         "parameters": [
           {
             "name": "files",
             "in": "query",
+            "description": "List of files to upload",
             "required": true,
             "schema": {
               "type": "array",
@@ -482,6 +512,7 @@
           {
             "name": "path",
             "in": "query",
+            "description": "Optional storage path",
             "required": false,
             "schema": {
               "type": "string"
@@ -490,11 +521,67 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Files successfully uploaded",
             "content": {
               "application/hal+json": {
                 "schema": {
-                  "type": "object"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RequestResponse"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/files/metadata/{id}": {
+      "get": {
+        "tags": [
+          "file-storage-controller"
+        ],
+        "summary": "Get metadata only",
+        "description": "Returns only metadata for the stored file (no binary content).",
+        "operationId": "getMetadata",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the file",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Metadata returned",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RequestResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -507,10 +594,93 @@
         "tags": [
           "file-storage-controller"
         ],
-        "operationId": "getAllFiles",
+        "summary": "List all stored files",
+        "description": "Returns metadata for all files currently stored.",
+        "operationId": "getAll",
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "List of stored files",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RequestResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/files/getByPath": {
+      "get": {
+        "tags": [
+          "file-storage-controller"
+        ],
+        "summary": "Get files by path prefix",
+        "description": "Returns all files whose stored names start with the given prefix. If prefix is empty or null, returns all files.",
+        "operationId": "getByPath",
+        "parameters": [
+          {
+            "name": "path",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of files returned successfully",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RequestResponse"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/files/find": {
+      "get": {
+        "tags": [
+          "file-storage-controller"
+        ],
+        "summary": "Find files by path prefix",
+        "description": "Returns stored file metadata whose logical path starts with the provided prefix. If path is blank or missing, returns all files.",
+        "operationId": "findByPath",
+        "parameters": [
+          {
+            "name": "path",
+            "in": "query",
+            "description": "Path prefix to search",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of matched files",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -530,11 +700,14 @@
         "tags": [
           "file-storage-controller"
         ],
+        "summary": "Download file by ID",
+        "description": "Downloads file binary content.",
         "operationId": "getFile",
         "parameters": [
           {
             "name": "id",
             "in": "path",
+            "description": "ID of the file to download",
             "required": true,
             "schema": {
               "type": "string"
@@ -543,11 +716,74 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "File found and returned",
             "content": {
               "application/hal+json": {
                 "schema": {
                   "type": "object"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "File not found",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/db/metadata/{id}": {
+      "get": {
+        "tags": [
+          "storage-controller"
+        ],
+        "summary": "Get metadata only",
+        "description": "Returns only metadata for the stored file (no binary content).",
+        "operationId": "getMetadata_1",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the file",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Metadata returned",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RequestResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -560,10 +796,93 @@
         "tags": [
           "storage-controller"
         ],
-        "operationId": "getAllFiles_1",
+        "summary": "List all stored files",
+        "description": "Returns metadata for all files currently stored.",
+        "operationId": "getAll_1",
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "List of stored files",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RequestResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/db/getByPath": {
+      "get": {
+        "tags": [
+          "storage-controller"
+        ],
+        "summary": "Get files by path prefix",
+        "description": "Returns all files whose stored names start with the given prefix. If prefix is empty or null, returns all files.",
+        "operationId": "getByPath_1",
+        "parameters": [
+          {
+            "name": "path",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of files returned successfully",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RequestResponse"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/db/find": {
+      "get": {
+        "tags": [
+          "storage-controller"
+        ],
+        "summary": "Find files by path prefix",
+        "description": "Returns stored file metadata whose logical path starts with the provided prefix. If path is blank or missing, returns all files.",
+        "operationId": "findByPath_1",
+        "parameters": [
+          {
+            "name": "path",
+            "in": "query",
+            "description": "Path prefix to search",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of matched files",
             "content": {
               "application/hal+json": {
                 "schema": {
@@ -583,11 +902,14 @@
         "tags": [
           "storage-controller"
         ],
+        "summary": "Download file by ID",
+        "description": "Downloads file binary content.",
         "operationId": "getFile_1",
         "parameters": [
           {
             "name": "id",
             "in": "path",
+            "description": "ID of the file to download",
             "required": true,
             "schema": {
               "type": "string"
@@ -596,11 +918,31 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "File found and returned",
             "content": {
               "application/hal+json": {
                 "schema": {
                   "type": "object"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "File not found",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -839,11 +1181,14 @@
         "tags": [
           "file-storage-controller"
         ],
+        "summary": "Delete file by ID",
+        "description": "Deletes a file from the storage by its ID.",
         "operationId": "deleteFile",
         "parameters": [
           {
             "name": "id",
             "in": "path",
+            "description": "ID of the file to delete",
             "required": true,
             "schema": {
               "type": "string"
@@ -851,8 +1196,47 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "204": {
+            "description": "Deleted",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/files/delete/all": {
+      "delete": {
+        "tags": [
+          "file-storage-controller"
+        ],
+        "summary": "Delete all files",
+        "description": "Deletes all files and metadata from the storage.",
+        "operationId": "deleteAllFiles",
+        "responses": {
+          "204": {
+            "description": "All files deleted",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
           }
         }
       }
@@ -862,11 +1246,14 @@
         "tags": [
           "storage-controller"
         ],
+        "summary": "Delete file by ID",
+        "description": "Deletes a file from the storage by its ID.",
         "operationId": "deleteFile_1",
         "parameters": [
           {
             "name": "id",
             "in": "path",
+            "description": "ID of the file to delete",
             "required": true,
             "schema": {
               "type": "string"
@@ -874,8 +1261,47 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "204": {
+            "description": "Deleted",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/db/delete/all": {
+      "delete": {
+        "tags": [
+          "storage-controller"
+        ],
+        "summary": "Delete all files",
+        "description": "Deletes all files and metadata from the storage.",
+        "operationId": "deleteAllFiles_1",
+        "responses": {
+          "204": {
+            "description": "All files deleted",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
           }
         }
       }
@@ -1067,19 +1493,44 @@
       },
       "RequestResponse": {
         "type": "object",
+        "description": "Response returned after a successful upload",
         "properties": {
           "fileName": {
-            "type": "string"
+            "type": "string",
+            "description": "Original filename (or logical stored filename)",
+            "example": "photo.png"
           },
           "downloadUrl": {
-            "type": "string"
+            "type": "string",
+            "description": "Public URL that can be used to download the file",
+            "example": "http://localhost:8080/api/files/download/1234"
           },
-          "fileType": {
-            "type": "string"
+          "contentType": {
+            "type": "string",
+            "description": "MIME type of the file",
+            "example": "image/png"
           },
-          "fileSize": {
+          "size": {
             "type": "integer",
-            "format": "int64"
+            "format": "int64",
+            "description": "File size in bytes",
+            "example": 34567
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "description": "Standard error wrapper",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Human readable message",
+            "example": "File not found"
+          },
+          "status": {
+            "type": "string",
+            "description": "HTTP status name",
+            "example": "NOT_FOUND"
           }
         }
       },
