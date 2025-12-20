@@ -151,13 +151,11 @@ public class FileStorageServiceImpl implements StorageService {
 
                 // Build filesystem path
                 Path path = Path.of(downloadFolder, storageEntity.orElseThrow().getFileName());
-
+                log.info("Loading file from disk: " + path);
                 // Determine media type via stored metadata or probe
                 MediaType contentType = ensureMediaType(storageEntity, path);
-
                 // Load file bytes from disk
                 byte[] bytes = Files.readAllBytes(path);
-
                 return Optional.of(new StorageEntity(id, contentType.toString(), bytes));
             }
             return Optional.empty();
