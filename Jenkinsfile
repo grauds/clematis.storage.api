@@ -93,6 +93,7 @@ pipeline {
         stage('Deploy on Yoda') {
           environment {
             SPRING_DATASOURCE_PASSWORD = credentials('SPRING_DATASOURCE_PASSWORD')
+            STORAGE_FILES_PATH = credentials('STORAGE_FILES_PATH')
           }
           steps {
             sshagent (credentials: ['yoda-anton-key']) {
