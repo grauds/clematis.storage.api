@@ -101,8 +101,9 @@ pipeline {
                     cd ${REMOTE_APP_DIR} && \
                     docker rm -f rm -f clematis-storage-api clematis-storage-mysql-db 2>/dev/null || true && \
                     export SPRING_DATASOURCE_PASSWORD="${SPRING_DATASOURCE_PASSWORD}" && \
+                    export STORAGE_FILES_PATH="${STORAGE_FILES_PATH}" && \
                     docker load < clematis.storage.api.tar && \
-                    docker compose -f docker-compose.yml build --build-arg SPRING_DATASOURCE_PASSWORD="${SPRING_DATASOURCE_PASSWORD}" && \
+                    docker compose -f docker-compose.yml build --build-arg STORAGE_FILES_PATH="${STORAGE_FILES_PATH}" --build-arg SPRING_DATASOURCE_PASSWORD="${SPRING_DATASOURCE_PASSWORD}" && \
                     docker compose -f docker-compose.yml up -d clematis-storage-db && \
                     docker compose -f docker-compose.yml up -d --no-deps --build clematis-storage-api
                   '
