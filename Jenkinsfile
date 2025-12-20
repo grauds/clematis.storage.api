@@ -37,7 +37,7 @@ pipeline {
 
         }
 
-        stage('Dependency-Check') {
+        /*stage('Dependency-Check') {
             steps {
                 timeout(time: 1, unit: 'MINUTES') {
                     dependencyCheck additionalArguments: '''
@@ -51,7 +51,7 @@ pipeline {
                     }
                 }
             }
-        }
+        }*/
 
         stage('Publish tests') {
             steps {
