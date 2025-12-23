@@ -7,7 +7,7 @@ clematis:
   storage:
     download:
       folder: ${STORAGE_FILES_PATH}
-    max_file_size: 1000000
+    max-file-size: 200MB
 
 management:
   endpoints:

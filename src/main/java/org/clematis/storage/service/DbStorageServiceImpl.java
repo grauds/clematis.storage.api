@@ -27,8 +27,8 @@ public class DbStorageServiceImpl implements StorageService {
 
     private final StorageEntityRepository storageEntityRepository;
 
-    @Value("${clematis.storage.max_file_size}")
-    private final int maxFileSize = 1024 * 1024; // fallback default (1 MB)
+    @Value("${clematis.storage.max_file_size:104857600}")
+    private long maxFileSize;
 
     public DbStorageServiceImpl(StorageEntityRepository storageEntityRepository) {
         this.storageEntityRepository = storageEntityRepository;
@@ -60,7 +60,7 @@ public class DbStorageServiceImpl implements StorageService {
         }
 
         // Validate size
-        if (file.getBytes().length > maxFileSize) {
+        if (file.getSize() > maxFileSize) {
             throw new MaxUploadSizeExceededException(file.getSize());
         }
 

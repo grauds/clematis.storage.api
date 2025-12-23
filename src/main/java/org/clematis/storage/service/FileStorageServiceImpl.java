@@ -77,7 +77,7 @@ public class FileStorageServiceImpl implements StorageService {
             throw new IOException("Filename contains invalid path sequence " + additionalPath);
         }
 
-        // Build the folder where file will be stored
+        // Build the folder where the file will be stored
         File destinationFolder = additionalPath.isEmpty()
             ? new File(this.downloadFolder)
             : new File(this.downloadFolder, additionalPath);
@@ -90,7 +90,7 @@ public class FileStorageServiceImpl implements StorageService {
 
         // Ensure folder exists
         if ((!destinationFolder.exists() && destinationFolder.mkdirs()) || destinationFolder.exists()) {
-            // Moves the uploaded file to destination (MultipartFile loses its buffer afterwards)
+            // Moves the uploaded file to destination (MultipartFile loses its buffer afterward)
             file.transferTo(destination);
         } else {
             log.log(Level.SEVERE, MAKE_DIR_ERROR_MESSAGE + destinationFolder.getAbsolutePath());
@@ -223,10 +223,12 @@ public class FileStorageServiceImpl implements StorageService {
     @Override
     public List<StorageEntity> findByPath(String path) {
         if (path == null || path.isBlank()) {
+            log.info("Loading all files...");
             return storageEntityRepository.findAll();
         }
 
         String normalizedPrefix = path.replace('\\', '/');
+        log.info("Loading files from path: " + normalizedPrefix);
 
         return storageEntityRepository.findAll().stream()
             .filter(entity -> {
