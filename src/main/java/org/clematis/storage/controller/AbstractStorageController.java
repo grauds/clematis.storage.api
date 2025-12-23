@@ -327,7 +327,7 @@ public abstract class AbstractStorageController {
     })
     @GetMapping("/getByPath")
     public ResponseEntity<List<RequestResponse>> getByPath(
-        @RequestParam(name = "path", required = false) String path) {
+        @RequestParam(name = "pathPrefix", required = false) String path) {
         try {
             List<StorageEntity> storageEntities = getStorageService().findByPath(path);
             List<RequestResponse> responses = storageEntities.stream()
