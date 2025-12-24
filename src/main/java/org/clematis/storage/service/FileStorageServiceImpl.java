@@ -103,7 +103,7 @@ public class FileStorageServiceImpl implements StorageService {
             contentType,
             new byte[0] // binary content is never stored here
         );
-
+        attachment.setSize(destination.length());
         return storageEntityRepository.save(attachment);
     }
 

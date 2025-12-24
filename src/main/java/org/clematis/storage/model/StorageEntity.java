@@ -38,6 +38,8 @@ public class StorageEntity {
     @Lob
     private byte[] data;
 
+    private long size;
+
     public StorageEntity(byte[] data) {
         this.data = data;
     }
@@ -46,5 +48,6 @@ public class StorageEntity {
         this.fileName = fileName;
         this.contentType = contentType;
         this.data = data;
+        this.size = data != null ? data.length : 0;
     }
 }
