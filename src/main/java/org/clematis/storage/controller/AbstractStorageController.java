@@ -139,7 +139,7 @@ public abstract class AbstractStorageController {
         List<RequestResponse> responses = storageEntities.stream()
             .map(storageEntity -> createResponse(storageEntity,
                     storageEntity.getContentType(),
-                    storageEntity.getData() == null ? 0 : storageEntity.getData().length
+                    storageEntity.getSize()
                 )
             ).collect(Collectors.toList());
 
@@ -163,7 +163,7 @@ public abstract class AbstractStorageController {
         List<StorageEntity> found = getStorageService().findByPath(path);
 
         List<RequestResponse> responses = found.stream()
-            .map(se -> createResponse(se, se.getContentType(), se.getData() == null ? 0 : se.getData().length))
+            .map(se -> createResponse(se, se.getContentType(), se.getSize()))
             .collect(Collectors.toList());
 
         return ResponseEntity.ok(responses);
@@ -234,8 +234,9 @@ public abstract class AbstractStorageController {
         }
         StorageEntity entity = se.get();
         RequestResponse resp = createResponse(
-            entity, entity.getContentType(),
-            entity.getData() == null ? 0 : entity.getData().length
+            entity,
+            entity.getContentType(),
+            entity.getSize()
         );
         return ResponseEntity.ok(resp);
     }
@@ -331,7 +332,7 @@ public abstract class AbstractStorageController {
         try {
             List<StorageEntity> storageEntities = getStorageService().findByPath(path);
             List<RequestResponse> responses = storageEntities.stream()
-                .map(entity -> createResponse(entity, entity.getContentType(), entity.getData().length))
+                .map(entity -> createResponse(entity, entity.getContentType(), entity.getSize()))
                 .toList();
             return ResponseEntity.ok(responses);
         } catch (Exception e) {
