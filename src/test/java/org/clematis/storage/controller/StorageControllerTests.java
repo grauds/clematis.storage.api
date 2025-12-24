@@ -220,7 +220,7 @@ public class StorageControllerTests extends ApplicationTests {
     public void testDownloadNotFound() {
         given(this.spec)
             .when()
-            .get("/api/files/download/does-not-exist")
+            .get("/api/files/does-not-exist")
             .then()
             .statusCode(404);
     }

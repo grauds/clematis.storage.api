@@ -20,7 +20,7 @@ public class RequestResponse {
 
     @Schema(
         description = "Public URL that can be used to download the file",
-        example = "http://localhost:8080/api/files/download/1234"
+        example = "http://localhost:8080/api/files/1234"
     )
     private String downloadUrl;
 

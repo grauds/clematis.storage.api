@@ -32,6 +32,6 @@ public class StorageController extends AbstractStorageController {
 
     @Override
     public String getDownloadPath() {
-        return "/api/db/download/";
+        return "/api/db/";
     }
 }

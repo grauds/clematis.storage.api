@@ -1123,14 +1123,13 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/api/files/download/:id",
+									"raw": "{{baseUrl}}/api/files/:id",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"api",
 										"files",
-										"download",
 										":id"
 									],
 									"variable": [
@@ -1154,14 +1153,13 @@
 											}
 										],
 										"url": {
-											"raw": "{{baseUrl}}/api/files/download/:id",
+											"raw": "{{baseUrl}}/api/files/:id",
 											"host": [
 												"{{baseUrl}}"
 											],
 											"path": [
 												"api",
 												"files",
-												"download",
 												":id"
 											],
 											"variable": [
@@ -1514,14 +1512,13 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/api/db/download/:id",
+									"raw": "{{baseUrl}}/api/db/:id",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"api",
 										"db",
-										"download",
 										":id"
 									],
 									"variable": [
@@ -1545,14 +1542,13 @@
 											}
 										],
 										"url": {
-											"raw": "{{baseUrl}}/api/db/download/:id",
+											"raw": "{{baseUrl}}/api/db/:id",
 											"host": [
 												"{{baseUrl}}"
 											],
 											"path": [
 												"api",
 												"db",
-												"download",
 												":id"
 											],
 											"variable": [
@@ -2088,7 +2084,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://{{storage_host}}/api/db/download/1f021105-782c-470d-93ec-f7d775e958f1",
+							"raw": "http://{{storage_host}}/api/db/1f021105-782c-470d-93ec-f7d775e958f1",
 							"protocol": "http",
 							"host": [
 								"{{storage_host}}"

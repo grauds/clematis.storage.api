@@ -183,7 +183,7 @@ public abstract class AbstractStorageController {
             )
     })
     @SuppressWarnings("checkstyle:ReturnCount")
-    @GetMapping(value = "/download/{id}")
+    @GetMapping(value = "/{id}")
     @ResponseBody
     public ResponseEntity<?> getFile(
         @Parameter(description = "ID of the file to download", required = true, in = ParameterIn.PATH)
@@ -303,7 +303,7 @@ public abstract class AbstractStorageController {
 
     /**
      * Must return the REST base path for downloading files.
-     * Example: "/api/storage/download/"
+     * Example: "/api/storage/"
      */
     @Operation(hidden = true)
     public abstract String getDownloadPath();
