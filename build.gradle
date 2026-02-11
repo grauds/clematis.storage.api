@@ -2,11 +2,10 @@ plugins {
     id 'java'
     id 'jacoco'
     id 'checkstyle'
-
-    id 'org.springframework.boot' version '3.5.5'
-    id 'io.spring.dependency-management' version '1.1.4'
-
     id 'com.github.spotbugs' version '6.1.6'
+
+    id 'org.springframework.boot' version '3.5.10'
+    id 'io.spring.dependency-management' version '1.1.4'
 
     id "org.springdoc.openapi-gradle-plugin" version "1.9.0"
     id "org.asciidoctor.jvm.convert" version "4.0.4"
@@ -17,10 +16,11 @@ repositories {
 }
 
 group = 'org.clematis'
-version = '1.0.0'
+version = '1.0.0-SNAPSHOT'
 
 java {
-    sourceCompatibility = '17'
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_21
 }
 
 configurations {
@@ -28,19 +28,27 @@ configurations {
     compileOnly {
         extendsFrom annotationProcessor
     }
+    // Avoid pulling legacy FindBugs annotations that don't contain SuppressMatchType
+    all {
+        exclude group: "com.google.code.findbugs", module: "annotations"
+        exclude group: "com.google.code.findbugs", module: "findbugs-annotations"
+    }
 }
 
 dependencies {
-
-    annotationProcessor 'org.projectlombok:lombok:1.18.34'
+    annotationProcessor 'org.projectlombok:lombok:1.18.42'
+    checkstyle "com.puppycrawl.tools:checkstyle:10.17.0"
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     asciidoctorExtensions 'org.springframework.restdocs:spring-restdocs-asciidoctor'
 
+    spotbugs "com.github.spotbugs:spotbugs:4.9.8"
+    spotbugs "com.github.spotbugs:spotbugs-annotations:4.9.8"
+
     compileOnly (
-        'org.projectlombok:lombok:1.18.34',
-        'com.github.spotbugs:spotbugs-annotations:4.8.6',
+            'org.projectlombok:lombok:1.18.42',
+            "com.github.spotbugs:spotbugs:4.9.8",
+            "com.github.spotbugs:spotbugs-annotations:4.9.8"
     )
-    checkstyle "com.puppycrawl.tools:checkstyle:10.17.0"
 
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
@@ -63,10 +71,11 @@ dependencies {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
 
-    testAnnotationProcessor 'org.projectlombok:lombok:1.18.34'
-    testCompileOnly (
-            "org.projectlombok:lombok:1.18.34",
-            'com.github.spotbugs:spotbugs-annotations:4.8.6'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.42'
+    testCompileOnly(
+            'org.projectlombok:lombok:1.18.42',
+            "com.github.spotbugs:spotbugs:4.9.8",
+            "com.github.spotbugs:spotbugs-annotations:4.9.8"
     )
 
     testImplementation "org.junit.jupiter:junit-jupiter:5.11.0"
@@ -178,6 +187,7 @@ configurations.create('coverageDataElements') {
 
 // ------------ Spotbugs configuration  ---------
 spotbugs {
+    toolVersion = '4.9.8'
     reportsDir = file("${layout.buildDirectory.asFile.get()}/reports/spotbugs/main/spotbugs.html")
     ignoreFailures = true
 }
