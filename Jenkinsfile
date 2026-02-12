@@ -37,21 +37,19 @@ pipeline {
 
         }
 
-        /*stage('Dependency-Check') {
+        stage('Dependency-Check') {
             steps {
-                timeout(time: 1, unit: 'MINUTES') {
-                    dependencyCheck additionalArguments: '''
-                        -o "./"
-                        -s "./"
-                        -f "ALL"
-                        --prettyPrint''', nvdCredentialsId: 'NVD_API_Key', odcInstallation: 'Dependency Checker'
-                    dependencyCheckPublisher pattern: 'dependency-check-report.xml'
-                    catchError(buildResult: 'SUCCESS', stageResult: 'SUCCESS') {
-                       sh "exit 1"
-                    }
+                dependencyCheck additionalArguments: '''
+                    -o "./"
+                    -s "./"
+                    -f "ALL"
+                    --prettyPrint''', nvdCredentialsId: 'NVD_API_Key', odcInstallation: 'Dependency Checker'
+                dependencyCheckPublisher pattern: 'dependency-check-report.xml'
+                catchError(buildResult: 'SUCCESS', stageResult: 'SUCCESS') {
+                   sh "exit 1"
                 }
             }
-        }*/
+        }
 
         stage('Publish tests') {
             steps {
