@@ -58,7 +58,7 @@ public class FileStorageServiceImpl implements StorageService {
     @Override
     @SuppressFBWarnings("NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE")
     public StorageEntity saveAttachment(MultipartFile file, String path) throws IOException {
-
+        log.info("Saving file to " + path);
         if (file == null) {
             throw new IOException("Multipart file is null");
         }
@@ -67,11 +67,13 @@ public class FileStorageServiceImpl implements StorageService {
         String fileName = file.getOriginalFilename() != null
             ? file.getOriginalFilename()
             : UUID.randomUUID().toString();
+        log.info("Generated filename: " + fileName);
 
         // Normalize the additional path, prevent path traversal
         String additionalPath = (path != null && !path.isEmpty())
             ? StringUtils.cleanPath(path)
             : "";
+        log.info("Normalized path: " + additionalPath);
 
         if (additionalPath.contains("..")) {
             throw new IOException("Filename contains invalid path sequence " + additionalPath);
@@ -81,6 +83,7 @@ public class FileStorageServiceImpl implements StorageService {
         File destinationFolder = additionalPath.isEmpty()
             ? new File(this.downloadFolder)
             : new File(this.downloadFolder, additionalPath);
+        log.info("Destination folder: " + destinationFolder.getAbsolutePath());
 
         // Build absolute destination file
         File destination = new File(destinationFolder, fileName).getAbsoluteFile();
@@ -93,17 +96,20 @@ public class FileStorageServiceImpl implements StorageService {
             // Moves the uploaded file to destination (MultipartFile loses its buffer afterward)
             file.transferTo(destination);
         } else {
+            log.info("Couldn't create directory: " + destinationFolder.getAbsolutePath());
             log.log(Level.SEVERE, MAKE_DIR_ERROR_MESSAGE + destinationFolder.getAbsolutePath());
             throw new IOException(MAKE_DIR_ERROR_MESSAGE + destinationFolder.getAbsolutePath());
         }
 
         // Store metadata only; contents stored on filesystem
+        log.info("File saved to: " + destination.getAbsolutePath());
         StorageEntity attachment = new StorageEntity(
             Paths.get(additionalPath, fileName).toString(),
             contentType,
             new byte[0] // binary content is never stored here
         );
         attachment.setSize(destination.length());
+        log.info("Metadata saved: " + attachment);
         return storageEntityRepository.save(attachment);
     }
 
@@ -113,10 +119,12 @@ public class FileStorageServiceImpl implements StorageService {
      */
     @Override
     public List<StorageEntity> saveAttachments(MultipartFile[] files, String path) {
+        log.info("Saving " + files.length + " files to " + path);
         return Arrays.stream(files).map(file -> {
             try {
                 return saveAttachment(file, path);
             } catch (Exception e) {
+                log.log(Level.SEVERE, e.getMessage());
                 throw new RuntimeException(e);
             }
         }).toList();
@@ -145,6 +153,7 @@ public class FileStorageServiceImpl implements StorageService {
     @SuppressWarnings("checkstyle:ReturnCount")
     @Override
     public Optional<StorageEntity> getStorageEntity(String id) {
+        log.info("Loading file with ID: " + id);
         try {
             Optional<StorageEntity> storageEntity = storageEntityRepository.findById(id);
             if (storageEntity.isPresent()) {
@@ -156,10 +165,13 @@ public class FileStorageServiceImpl implements StorageService {
                 MediaType contentType = ensureMediaType(storageEntity, path);
                 // Load file bytes from disk
                 byte[] bytes = Files.readAllBytes(path);
+                log.info("Loaded file with size: " + bytes.length);
                 return Optional.of(new StorageEntity(id, contentType.toString(), bytes));
             }
+            log.info("File not found");
             return Optional.empty();
         } catch (IOException e) {
+            log.log(Level.SEVERE, "Failed to load file from disk: " + id);
             log.log(Level.SEVERE, e.getMessage());
             return Optional.empty();
         }
@@ -174,7 +186,7 @@ public class FileStorageServiceImpl implements StorageService {
     private MediaType ensureMediaType(Optional<StorageEntity> storageEntity, Path path) {
 
         MediaType mediaType = null;
-
+        log.info("Determining media type for " + path);
         // Try stored content type
         try {
             mediaType = MediaType.valueOf(storageEntity.orElseThrow().getContentType());
@@ -193,7 +205,7 @@ public class FileStorageServiceImpl implements StorageService {
                 log.warning("Failed to probe media type of " + path);
             }
         }
-
+        log.info("Determined media type: " + mediaType + " for " + path);
         // Fallback
         return mediaType != null ? mediaType : MediaType.APPLICATION_OCTET_STREAM;
     }
@@ -203,6 +215,7 @@ public class FileStorageServiceImpl implements StorageService {
      */
     @Override
     public void deleteFile(String id) {
+        log.info("Deleting file with ID: " + id);
         storageEntityRepository.findById(id).ifPresent(entity -> {
             Path path = Path.of(downloadFolder, entity.getFileName());
             try {
@@ -222,6 +235,7 @@ public class FileStorageServiceImpl implements StorageService {
      */
     @Override
     public List<StorageEntity> findByPath(String path) {
+        log.info("Searching for files by path: " + path);
         if (path == null || path.isBlank()) {
             log.info("Loading all files...");
             return storageEntityRepository.findAll();

@@ -16,6 +16,8 @@ import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.MultipartFile;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import lombok.extern.java.Log;
+
 /**
  * Storage service implementation that persists uploaded files in a database.
  * <p>
@@ -23,6 +25,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * while the logical path (folder + filename) is stored in the entity's path field.
  */
 @Service
+@Log
 public class DbStorageServiceImpl implements StorageService {
 
     private final StorageEntityRepository storageEntityRepository;
@@ -39,10 +42,12 @@ public class DbStorageServiceImpl implements StorageService {
      * Validates file name, checks size limits, normalizes path separators,
      * and stores binary contents directly.
      */
+    @SuppressWarnings("checkstyle:MultipleStringLiterals")
     @Override
     @SuppressFBWarnings("NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE")
     public StorageEntity saveAttachment(MultipartFile file, String path) throws IOException {
 
+        log.info("Saving file to " + path);
         // Clean the filename to avoid path traversal attempts
         String fileName = StringUtils.cleanPath(
             Objects.requireNonNull(file.getOriginalFilename(), "Original filename is null")
@@ -50,9 +55,12 @@ public class DbStorageServiceImpl implements StorageService {
 
         // Build the logical path: "some/path/file.ext" or just "file.ext"
         String additionalPath = (path != null && !path.isEmpty()) ? path : "";
+        log.info("Normalized path: " + additionalPath);
+
         String destination = additionalPath.isEmpty()
             ? fileName
             : additionalPath + File.separator + fileName;
+        log.info("Destination: " + destination);
 
         // Security: forbid directory change in names
         if (fileName.contains("..")) {
@@ -61,6 +69,7 @@ public class DbStorageServiceImpl implements StorageService {
 
         // Validate size
         if (file.getSize() > maxFileSize) {
+            log.severe("File size exceeds max allowed: " + file.getSize() + " > " + maxFileSize);
             throw new MaxUploadSizeExceededException(file.getSize());
         }
 
@@ -70,7 +79,7 @@ public class DbStorageServiceImpl implements StorageService {
             file.getContentType(),
             file.getBytes()
         );
-
+        log.info("Metadata saved: " + attachment);
         // Persist to DB
         return storageEntityRepository.save(attachment);
     }
@@ -81,10 +90,12 @@ public class DbStorageServiceImpl implements StorageService {
      */
     @Override
     public List<StorageEntity> saveAttachments(MultipartFile[] files, String path) {
+        log.info("Saving " + files.length + " files to " + path);
         return Arrays.stream(files).map(file -> {
             try {
                 return saveAttachment(file, path);
             } catch (Exception e) {
+                log.log(java.util.logging.Level.SEVERE, e.getMessage());
                 throw new RuntimeException("Failed to save attachment: " + file.getOriginalFilename(), e);
             }
         }).toList();
@@ -125,13 +136,15 @@ public class DbStorageServiceImpl implements StorageService {
      */
     @Override
     public List<StorageEntity> findByPath(String path) {
-        // If no filter provided — return everything
+        log.info("Searching for files by path: " + path);
+        // If no filter provided, return everything
         if (path == null || path.isBlank()) {
             return storageEntityRepository.findAll();
         }
 
         // Normalize prefix
         String normalizedPrefix = path.replace('\\', '/');
+        log.info("Normalized path: " + normalizedPrefix);
 
         return storageEntityRepository.findAll().stream()
             .filter(entity -> {
