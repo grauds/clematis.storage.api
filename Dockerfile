@@ -1,6 +1,6 @@
 FROM eclipse-temurin:25-jdk
 
-ENV ENV_NAME=local
+ENV ENV_NAME=prod
 
 ARG JAR_FILE=build/**/clematis.storage.api-*.jar
 COPY ${JAR_FILE} app.jar

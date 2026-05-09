@@ -1,10 +1,10 @@
 plugins {
     id 'java'
-    id 'jacoco'
+    id 'jacoco-report-aggregation'
     id 'checkstyle'
     id 'com.github.spotbugs' version '6.1.6'
 
-    id 'org.springframework.boot' version '3.5.10'
+    id 'org.springframework.boot' version '3.5.13'
     id 'io.spring.dependency-management' version '1.1.4'
 
     id "org.springdoc.openapi-gradle-plugin" version "1.9.0"
@@ -19,8 +19,11 @@ group = 'org.clematis'
 version = '1.0.0-SNAPSHOT'
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_21
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(25)
+    }
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
 }
 
 configurations {
@@ -77,8 +80,6 @@ dependencies {
             "com.github.spotbugs:spotbugs:4.9.8",
             "com.github.spotbugs:spotbugs-annotations:4.9.8"
     )
-
-    testImplementation "org.junit.jupiter:junit-jupiter:5.11.0"
 
     testImplementation 'org.springframework.boot:spring-boot-testcontainers'
     testImplementation 'io.rest-assured:rest-assured:5.4.0'
@@ -188,7 +189,7 @@ configurations.create('coverageDataElements') {
 // ------------ Spotbugs configuration  ---------
 spotbugs {
     toolVersion = '4.9.8'
-    reportsDir = file("${layout.buildDirectory.asFile.get()}/reports/spotbugs/main/spotbugs.html")
+    reportsDir = layout.buildDirectory.dir("reports/spotbugs/main/spotbugs.html")
     ignoreFailures = true
 }
 
@@ -216,9 +217,9 @@ asciidoctor {
     ]
 
     inputs.dir snippetsDir
-    outputDir "build/asciidoc"
-    sourceDir 'src/docs/asciidocs'
-    baseDir sourceDir
+    outputDir = "build/asciidoc"
+    sourceDir = file('src/docs/asciidocs')
+    baseDir = sourceDir
     sources {
         include 'api.adoc'
     }
