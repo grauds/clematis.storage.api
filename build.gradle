@@ -4,15 +4,11 @@ plugins {
     id 'checkstyle'
     id 'com.github.spotbugs' version '6.1.6'
 
-    id 'org.springframework.boot' version '3.5.13'
+    id 'org.springframework.boot' version '3.5.14'
     id 'io.spring.dependency-management' version '1.1.4'
 
     id "org.springdoc.openapi-gradle-plugin" version "1.9.0"
     id "org.asciidoctor.jvm.convert" version "4.0.4"
-}
-
-repositories {
-    mavenCentral()
 }
 
 group = 'org.clematis'
@@ -32,7 +28,7 @@ configurations {
         extendsFrom annotationProcessor
     }
     // Avoid pulling legacy FindBugs annotations that don't contain SuppressMatchType
-    all {
+    configureEach {
         exclude group: "com.google.code.findbugs", module: "annotations"
         exclude group: "com.google.code.findbugs", module: "findbugs-annotations"
     }
