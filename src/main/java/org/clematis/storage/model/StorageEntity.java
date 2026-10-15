@@ -1,10 +1,9 @@
 package org.clematis.storage.model;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
@@ -27,8 +26,7 @@ import lombok.NoArgsConstructor;
 public class StorageEntity {
 
     @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
     private String fileName;

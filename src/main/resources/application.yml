@@ -20,6 +20,11 @@ management:
 
 spring:
 
+  autoconfigure:
+    exclude:
+      - org.springdoc.core.configuration.SpringDocHateoasConfiguration
+      - org.springdoc.core.configuration.SpringDocDataRestConfiguration
+
   profiles:
     active: ${SPRING_PROFILES_ACTIVE}
 
@@ -61,6 +66,10 @@ logging:
       ${LOG_PATH}
 
 springdoc:
+  hateoas:
+    enabled: false
+  data-rest:
+    enabled: false
   swagger-ui:
     display-request-duration: true
     groups-order: ASC

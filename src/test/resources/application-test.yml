@@ -5,6 +5,11 @@ clematis:
     max_file_size: 1000000
 
 spring:
+  autoconfigure:
+    exclude:
+      - org.springdoc.core.configuration.SpringDocHateoasConfiguration
+      - org.springdoc.core.configuration.SpringDocDataRestConfiguration
+
   jackson:
     serialization:
       FAIL_ON_EMPTY_BEANS: false
@@ -29,6 +34,12 @@ spring:
 logging:
   file:
     path: ./logs
+
+springdoc:
+  hateoas:
+    enabled: false
+  data-rest:
+    enabled: false
 
 JMXMP_HOST: 0.0.0.0
 JMXMP_PORT: 5001
