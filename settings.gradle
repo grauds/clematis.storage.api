@@ -10,6 +10,14 @@ pluginManagement {
                     password = providers.gradleProperty("artifactory_password").orNull ?: System.getenv("ARTIFACTORY_PASSWORD")
                 }
             }
+            maven {
+                url "http://192.168.1.174:8082/artifactory/gradle-plugins-remote"
+                allowInsecureProtocol = true
+                credentials {
+                    username = providers.gradleProperty("artifactory_user").orNull ?: System.getenv("ARTIFACTORY_USER")
+                    password = providers.gradleProperty("artifactory_password").orNull ?: System.getenv("ARTIFACTORY_PASSWORD")
+                }
+            }
         } else {
             // Default fallback for local machine dev and GitHub Actions
             gradlePluginPortal()
