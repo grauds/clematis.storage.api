@@ -30,11 +30,16 @@ pipeline {
             }
         }
 
-        stage('Gradle build') {
+        stage('Gradle Build') {
             steps {
-                sh './gradlew clean build --no-daemon'
+                withCredentials([usernamePassword(credentialsId: 'artifactory-admin-token',
+                                                 passwordVariable: 'ARTIFACTORY_PASSWORD',
+                                                 usernameVariable: 'ARTIFACTORY_USER')]) {
+                    withEnv(['USE_ARTIFACTORY=true']) {
+                        sh './gradlew clean build'
+                    }
+                }
             }
-
         }
 
         stage('Dependency-Check') {
