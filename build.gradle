@@ -4,7 +4,7 @@ plugins {
     id 'checkstyle'
     id 'com.github.spotbugs' version '6.1.6'
 
-    id 'org.springframework.boot' version '4.0.0'
+    id 'org.springframework.boot' version '4.1.1'
     id 'io.spring.dependency-management' version '1.1.7'
 
     id "org.springdoc.openapi-gradle-plugin" version "1.9.0"
@@ -12,7 +12,7 @@ plugins {
 }
 
 group = 'org.clematis'
-version = '1.0.0-SNAPSHOT'
+version = '1.0.1'
 
 java {
     toolchain {
@@ -64,16 +64,13 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
     runtimeOnly 'com.mysql:mysql-connector-j'
-    runtimeOnly 'com.h2database:h2'
 
-    implementation 'org.springdoc:springdoc-openapi-starter-common:3.0.0'
-    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:3.0.0'
+    implementation 'org.springdoc:springdoc-openapi-starter-common:3.1.1'
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:3.1.1'
 
     implementation 'org.glassfish.main.external:jmxremote_optional-repackaged:5.0'
     // to use regexp in logback.xml
     implementation 'org.codehaus.janino:janino:3.1.12'
-
-    runtimeOnly 'org.springframework.boot:spring-boot-properties-migrator'
 
     testImplementation ('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
@@ -89,11 +86,10 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-testcontainers'
     testImplementation 'io.rest-assured:rest-assured:5.5.1'
     testImplementation 'io.rest-assured:json-path:5.5.1'
-    testImplementation 'org.testcontainers:testcontainers:1.20.4'
-    testImplementation 'org.testcontainers:junit-jupiter:1.20.4'
-    testImplementation 'org.testcontainers:mysql:1.20.4'
+    testImplementation 'org.testcontainers:testcontainers-junit-jupiter:2.0.2'
+    testImplementation 'org.testcontainers:testcontainers-mysql:2.0.2'
 
-    testImplementation 'org.springframework.restdocs:spring-restdocs-restassured:3.0.3'
+    testImplementation 'org.springframework.restdocs:spring-restdocs-restassured:3.0.6'
 }
 
 ext {
