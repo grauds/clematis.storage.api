@@ -90,6 +90,9 @@ dependencies {
     testImplementation 'org.testcontainers:testcontainers-mysql:2.0.2'
 
     testImplementation 'org.springframework.restdocs:spring-restdocs-restassured:3.0.6'
+
+    testRuntimeOnly 'com.h2database:h2'
+
 }
 
 ext {
