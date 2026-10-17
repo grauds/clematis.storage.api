@@ -31,8 +31,7 @@ configurations {
     configureEach {
         exclude group: "com.google.code.findbugs", module: "annotations"
         exclude group: "com.google.code.findbugs", module: "findbugs-annotations"
-    }
-    all {
+
         resolutionStrategy.eachDependency { DependencyResolveDetails details ->
             if (details.requested.group == 'org.apache.groovy') {
                 details.useVersion '4.0.24'
@@ -63,7 +62,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-rest'
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
-    runtimeOnly 'com.mysql:mysql-connector-j'
+    implementation 'org.clematis:clematis-commons-spring:1.0.0-SNAPSHOT'
 
     implementation 'org.springdoc:springdoc-openapi-starter-common:3.1.1'
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:3.1.1'
@@ -71,6 +70,8 @@ dependencies {
     implementation 'org.glassfish.main.external:jmxremote_optional-repackaged:5.0'
     // to use regexp in logback.xml
     implementation 'org.codehaus.janino:janino:3.1.12'
+
+    runtimeOnly 'com.mysql:mysql-connector-j'
 
     testImplementation ('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'

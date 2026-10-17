@@ -26,6 +26,21 @@ pluginManagement {
     }
 }
 
+def githubEnv = rootDir.toPath().resolve('config/build/github.env').toFile()
+def envProps = new Properties()
+if (githubEnv.exists()) {
+    githubEnv.withInputStream { envProps.load(it) }
+}
+
+def gprUser = providers.environmentVariable("USERNAME").orNull
+        ?: providers.gradleProperty("gpr.user").orNull
+        ?: envProps.getProperty("USERNAME")
+
+def gprToken = providers.environmentVariable("TOKEN").orNull
+        ?: providers.gradleProperty("gpr.key").orNull
+        ?: envProps.getProperty("TOKEN")
+
+
 dependencyResolutionManagement {
     repositories {
         // Check if the pipeline explicitly requested Artifactory
@@ -41,7 +56,16 @@ dependencyResolutionManagement {
             }
         } else {
             // Fallback for GitHub Actions
-            mavenCentral()
+            mavenCentral() 
+        }
+
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/grauds/clematis.commons.spring")
+            credentials {
+                username = gprUser
+                password = gprToken
+            }
         }
     }
 }
