@@ -1,5 +1,6 @@
 <configuration>
     <springProperty name="LOG_PATH" source="logging.file.path" defaultValue="logs/" />
+
     <jmxConfigurator/>
 
     <conversionRule conversionWord="mdc" converterClass="org.clematis.logging.CustomMDCConverter" />
@@ -55,11 +56,12 @@
 
     <root level="${LOG_LEVEL}">
         <appender-ref ref="file"/>
-        <appender-ref ref="stdout" />
+        <appender-ref ref="stdout"/>
     </root>
 
     <logger name="org.clematis" level="${LOG_LEVEL}"/>
     <logger name="jworkspace" level="${LOG_LEVEL}"/>
     <logger name="org.springframework" level="${LOG_LEVEL}"/>
+    <logger name="org.hibernate.SQL" level="ERROR"/>
 
 </configuration>
