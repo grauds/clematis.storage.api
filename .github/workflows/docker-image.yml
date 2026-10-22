@@ -34,6 +34,9 @@ jobs:
 
     - name: Build with Gradle
       run: chmod +x ./gradlew && chmod +x gradle/wrapper/gradle-wrapper.jar && ./gradlew build
+      env:
+        USERNAME: ${{ github.actor }}
+        TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag clematis-storage-api:$(date +%s)
