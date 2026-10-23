@@ -1,9 +1,7 @@
 # Clematis Storage API 
   
 [![License](https://img.shields.io/badge/License-GPLv2%202.0-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.html)
-[![CI to Docker Hub](https://github.com/grauds/clematis.storage.api/actions/workflows/CI_to_Docker_Hub.yml/badge.svg)](https://github.com/grauds/clematis.storage.api/actions/workflows/CI_to_Docker_Hub.yml)
 [![Docker Image CI](https://github.com/grauds/clematis.storage.api/actions/workflows/docker-image.yml/badge.svg)](https://github.com/grauds/clematis.storage.api/actions/workflows/docker-image.yml)
-[![Docker](https://github.com/grauds/clematis.storage.api/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/grauds/clematis.storage.api/actions/workflows/docker-publish.yml)
 
 
 ## About
@@ -12,12 +10,12 @@ This is a Restful API service for anonymous file storage
 
 ## Quick Start
 
-Checkout the code
+Check out the code
 ```
 git clone https://github.com/grauds/clematis.storage.api
 ```                                                            
 
-Set executable bit to gradlew
+Set the executable bit to gradlew
 ```
 chmod +x gradlew
 ```
