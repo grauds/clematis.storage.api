@@ -6,7 +6,7 @@ pipeline {
         SSH_DEST = "${REMOTE_USER}@${REMOTE_HOST}"
         REMOTE_APP_DIR = "/home/anton/deploy/storage/api"
         USERNAME = "grauds"
-        TOKEN = credentials('GITHUB_PERSONAL_TOKEN')
+        TOKEN = credentials('JENKINS_GITHUB')
     }
 
     stages {
