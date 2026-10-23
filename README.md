@@ -1,6 +1,6 @@
 # Clematis Storage API 
-  
-[![License](https://img.shields.io/badge/License-GPLv2%202.0-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.html)
+
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](https://opensource.org/license/mit-0)
 [![Docker Image CI](https://github.com/grauds/clematis.storage.api/actions/workflows/docker-image.yml/badge.svg)](https://github.com/grauds/clematis.storage.api/actions/workflows/docker-image.yml)
 
 
